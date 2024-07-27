@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento JS</title>
+    <style>
+        body {
+            background-color: rgb(4, 44, 44);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nova página JavaScript</h1>
+    <p>Vamos escrever em JS</p>
+
+    <!-- Programação em JavaScript dentro da tag <script> -->
+
+    <script>
+        var n1 = Number(window.prompt('Digite um número!'))
+        var n2 = Number(window.prompt('Digite outro número!'))
+
+        // Nas variáveis n1 e n2 são digitados números, porém no prompt é entendido valor como string, então tive que converter para número, com a função Number, para que seja interpretado corretamente
+        
+        var soma = n1 + n2
+        var sub = n1 - n2
+        var mult = n1 * n2
+        var div = n1 / n2
+        window.alert(`A soma de ${n1} + ${n2} é igual a ${soma}`) // Aqui eu utilizei o Template String com Placeholder
+        window.alert(`A subtração de ${n1} - ${n2} é igual a ${sub}`) // Aqui eu utilizei o Template String com Placeholder
+        window.alert(`A multiplicação de ${n1} * ${n2} é igual a ${mult}`) // Aqui eu utilizei o Template String com Placeholder
+        window.alert(`A divisão de ${n1} / ${n2} é igual a ${div}`) // Aqui eu utilizei o Template String com Placeholder
+        window.alert("Estas são as 4 operações básicas da matemática")
+    </script>
+</body>
+</html>
