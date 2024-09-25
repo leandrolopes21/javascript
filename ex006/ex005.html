@@ -18,6 +18,7 @@
     <!-- Programação em JavaScript dentro da tag <script> -->
 
     <script>
+        
         var n1 = Number(window.prompt('Digite um número!'));
         var n2 = Number(window.prompt('Digite outro número!'));
 
@@ -27,18 +28,13 @@
         var sub = n1 - n2;
         var mult = n1 * n2;
         var div = n1 / n2;
+        
+        /* Dados apresentados na tela, com a função document.write */
 
-        /* Dados apresentados em caixa de texto com a função window.alert */
-        
-        window.alert(`A soma de ${n1} + ${n2} é igual a ${soma}`); // Aqui eu utilizei o Template String com Placeholder
-        
-        window.alert(`A subtração de ${n1} - ${n2} é igual a ${sub}`); // Aqui eu utilizei o Template String com Placeholder
-        
-        window.alert(`A multiplicação de ${n1} * ${n2} é igual a ${mult}`); // Aqui eu utilizei o Template String com Placeholder
-        
-        window.alert(`A divisão de ${n1} / ${n2} é igual a ${div}`); // Aqui eu utilizei o Template String com Placeholder
-        
-        window.alert("Estas são as 4 operações básicas da matemática");
+        document.write("A soma de " + n1 + " + " + n2 + " é igual a " + soma + "<br>");
+        document.write("A subtração de " + n1 + " - " + n2 + " é igual a " + sub + "<br>");
+        document.write("A multiplicação de " + n1 + " * " + n2 + " é igual a " + mult + "<br>");
+        document.write("A divisão de " + n1 + " / " + n2 + " é igual a " + div);
 
     </script>
 </body>
