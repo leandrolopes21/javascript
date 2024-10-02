@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        body {
+            background-color: aqua;
+        }
+
+        p {
+            background-color: black;
+            color: white;
+        }
+
+        div {
+            font-family: 'Courier New', Courier, monospace;
+            /*cursor: pointer;*/
+        }
+
+    </style>
+
+    <title>Documento JS</title>
+</head>
+<body>
+    <h1>Vamos criar um pouco de código JavaScript</h1>
+    <p>Vamos estudar primeiro o <strong>DOM</strong> nesta aula</p>
+    <p>Importante treinar</p>
+    <p>Importante praticar</p>
+    <div id="yes">Clique aqui</div> <br>
+
+    <script>
+
+        var corpo = window.document.body;
+
+        corpo.style.backgroundColor = 'gray';
+        
+        var p1 = window.document.getElementsByTagName('p') [0];
+
+        var d = window.document.getElementById('yes'); // Cria uma variável e chama a div pelo seu id="yes"
+        d.innerText = 'método getElementById()';
+        d.style.color = 'blue';
+
+        /* var d = window.document.getElementsByName('yes') [0]; // Cria uma variável e chama a div pelo seu name="yes"
+        d.innerText = 'método getElementsByName()';
+        d.style.color = 'blue'; */
+
+        /* var d = window.document.querySelector('div#yes'); // Chama a div através do método querySelector();
+        d.innerText = 'método querySelector()';
+        d.style.color = 'blue'; */
+
+        window.document.write(p1.innerHTML);
+
+    </script>
+</body>
+</html>
