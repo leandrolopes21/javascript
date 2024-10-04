@@ -9,9 +9,9 @@
             background-color: lightgray;
         }
 
-        div.princ1 {
+        div#princ1 {
             background-color: #F7C072;
-            width: 550px;
+            width: 600px;
             margin: auto;
             border: 1px solid black;
             border-radius: 10px;
@@ -35,13 +35,14 @@
     <title>Somando Valores</title>
 </head>
 <body>
-    <div class="princ1">
+    <div id="princ1">
         <h1>Somando Valores</h1>
 
         <div class="princ2">
             <input type="number" name="txt1" id="txt1">
             <input type="number" name="txt2" id="txt2">
-            <input type="submit" value="Somar" onclick="somar()">
+            <input type="submit" value="Somar" id="bt1" onclick="somar()">
+            <!-- <input type="submit" value="Limpar" id="bt2" onclick="limpar()"> -->
             <div id="res"></div>
         </div>
     </div>
@@ -52,14 +53,45 @@
             
             var tn1 = window.document.getElementById('txt1');
             var tn2 = window.document.getElementById('txt2');
+
+            var bt1 = window.document.getElementById('bt1');
+            var div = document.getElementById('princ1'); // cria uma variável div para chamar a div com id princ1
+
             var res = window.document.getElementById('res');
 
             var n1 = Number(tn1.value);
             var n2 = Number(tn2.value);
+
+            tn1.disabled = true;
+            tn2.disabled = true;
+            bt1.disabled = true;
+
+            var bt2 = window.document.createElement("button"); // cria uma variável bt2 para criar um botão
+            bt2.textContent = "Limpar"; // nomeia o botão
+            div.appendChild(bt2); // insere o botão dentro da div com id princ1
+            bt2.addEventListener("click", limpar);
+
             
             var soma = n1 + n2;
-            res.innerHTML = `A soma de ${n1} + ${n2} é igual <strong>${soma}</strong>`;
+
+            res.innerHTML = `A soma de ${n1} + ${n2} é igual a <strong>${soma}</strong>`;
+            res.style.backgroundColor = 'green';
+            res.style.color = 'white';
         }
+
+        /* function limpar() {
+
+            window.document.getElementById('res').innerHTML = "";
+
+            windo.document.getElementById('txt1') = '';
+
+            tn1.disabled = false;
+            tn2.disabled = false;
+
+            /*tn1.value = '';
+            tn2.value = '';
+
+        } */
 
     </script>
 </body>
