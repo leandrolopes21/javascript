@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        div {
+            background-color: rgb(128, 109, 0);
+            color: white;
+            width: 300px;
+            height: 300px;
+            font: normal 2em Arial;
+            margin: auto;
+            text-align: center;
+            align-content: center;
+
+        }
+
+    </style>
+
+    <title>Interatividade com Javascript</title>
+</head>
+<body>
+    <div id="interativo">
+        Interaja...
+    </div>
+
+    <script>
+
+        var a = window.document.getElementById('interativo');
+        
+        a.addEventListener('click', clicou);
+        a.addEventListener('mouseenter', entrar);
+        a.addEventListener('mouseout', sair);
+
+        function clicou() {
+            
+            a.innerText = 'Clicou!';
+            a.style.backgroundColor = 'black';
+            a.style.color = 'white';
+
+        }
+
+        function entrar() {
+            
+            a.innerText = 'Entrou!';
+            a.style.backgroundColor = 'blue';
+        }
+
+        function sair() {
+
+            a.innerText = 'Saiu!';
+            a.style.backgroundColor = 'orange';
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            background-color: lightgray;
+        }
+
+        div.princ1 {
+            background-color: #F7C072;
+            width: 550px;
+            margin: auto;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        div.princ2 {
+            width: 80%;
+            margin: auto;
+        }
+
+        div#res {
+            width: 70%;
+            margin: 10px auto;
+            text-align: center;
+        }
+    </style>
+    <title>Somando Valores</title>
+</head>
+<body>
+    <div class="princ1">
+        <h1>Somando Valores</h1>
+
+        <div class="princ2">
+            <input type="number" name="txt1" id="txt1">
+            <input type="number" name="txt2" id="txt2">
+            <input type="submit" value="Somar" onclick="somar()">
+            <div id="res"></div>
+        </div>
+    </div>
+
+    <script>
+
+        function somar() {
+            
+            var tn1 = window.document.getElementById('txt1');
+            var tn2 = window.document.getElementById('txt2');
+            var res = window.document.getElementById('res');
+
+            var n1 = Number(tn1.value);
+            var n2 = Number(tn2.value);
+            
+            var soma = n1 + n2;
+            res.innerHTML = `A soma de ${n1} + ${n2} é igual <strong>${soma}</strong>`;
+        }
+
+    </script>
+</body>
+</html>
