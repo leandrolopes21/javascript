@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: lightgray;
+        }
+
+        div#bloco {
+            background-color: lightcyan;
+            width: 60%;
+            margin: 10px auto;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+
+        p#res {
+            background-color: black;
+            color: white;
+            width: 80%;
+            margin: 10px auto;
+        }
+    </style>
+    <title>Medidor de Velocidade</title>
+</head>
+<body>
+    <div id="bloco">
+        <h1>Medidor de Velocidade</h1>
+
+        <label for="vel">Digite sua velocidade</label>
+        <input type="number" name="vel" id="txtvel">
+        <input type="button" value="Enviar" id="bt1" onclick="enviar()">
+
+        <p id="res"></p>
+    </div>
+
+    <script>
+
+        function enviar() {
+
+            var txtve = document.getElementById('txtvel');
+
+            var bt1 = document.getElementById('bt1');
+        
+            var resp = document.getElementById('res');
+
+            var vel = Number(txtve.value);
+
+            txtve.disabled = true;
+            bt1.disabled = true;
+
+            if (vel < 60) {
+
+                resp.innerHTML += "Você está dentro do limite de velocidade!";
+            } else {
+
+                resp.innerHTML += "Você está acima da velocidade, MULTADO!!";
+            }
+
+            resp.innerHTML += "Dirija sempre com cinto de segurança!";
+
+        }        
+
+    </script>
+</body>
+</html>
