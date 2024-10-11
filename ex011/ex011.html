@@ -10,7 +10,7 @@
 
         div#bloco {
             background-color: lightcyan;
-            width: 60%;
+            width: 460px;
             margin: 10px auto;
             padding: 5px;
             text-align: center;
@@ -31,7 +31,8 @@
     <div id="bloco">
         <h1>Medidor de Velocidade</h1>
 
-        <label for="vel">Digite sua velocidade</label>
+        <h3>Digite sua velocidade - Limite 60Km/h</h3>
+
         <input type="number" name="vel" id="txtvel">
         <input type="button" value="Enviar" id="bt1" onclick="enviar()">
 
@@ -43,27 +44,37 @@
         function enviar() {
 
             var txtve = document.getElementById('txtvel');
-
             var bt1 = document.getElementById('bt1');
-        
             var resp = document.getElementById('res');
+            var div = document.getElementById('bloco');
 
             var vel = Number(txtve.value);
 
             txtve.disabled = true;
             bt1.disabled = true;
 
-            if (vel < 60) {
-
-                resp.innerHTML += "Você está dentro do limite de velocidade!";
-            } else {
-
-                resp.innerHTML += "Você está acima da velocidade, MULTADO!!";
+            if (vel == "") {
+                resp.innerHTML = "Por favor, digite valores válidos! <br>";
             }
 
-            resp.innerHTML += "Dirija sempre com cinto de segurança!";
+            else if (vel < 60) {
 
-        }        
+                resp.innerHTML = "Você está dentro do limite de velocidade! <br>";
+                resp.style.backgroundColor = 'green';
+            } else {
+
+                resp.innerHTML = "Você está acima do limite de velocidade, MULTADO!! <br>";
+                resp.style.backgroundColor = 'red';
+            }
+
+            /*resp.innerHTML += "Dirija sempre com cinto de segurança!";*/
+
+            /*var bt2 = document.createElement("button");
+            bt2.textContent('Limpar');
+            div.appendChild(bt2);
+            bt2.addEventListener('click', limpar);*/
+
+        }
 
     </script>
 </body>
