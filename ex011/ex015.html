@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio</title>
+</head>
+<body>
+    <div id="bloco">
+
+        <h1>Escolha sua opção de lanche</h1>
+
+        <p>Opção 0: Cachorro-Quente</p>
+        <p>Opção 1: X-Salada</p>
+        <p>Opção 2: X-Tudo</p>
+        <p>Opção 3: McLanche</p>
+        <p>Opção 4: Burguer King</p>
+
+        <input type="number" name="lanche" id="lanche" placeholder="Digite sua opção (número)">
+        <input type="submit" value="Enviar" onclick="escolha()">
+
+        <p id="resultado"></p>
+
+    </div>
+
+    <script>
+
+        function escolha() {
+            
+            var cardapio = document.getElementById('lanche')
+            var res = document.getElementById('resultado')
+
+            /*0 = 'cachorro-quente'
+            1 = 'x-salada'
+            2 = 'supersamduba'
+            3 = 'lombada'*/
+
+            switch(cardapio) {
+                case 0:
+                    res.innerHTML = 'Cachorro-Quente'
+                    break
+
+                case 1:
+                    res.innerHTML = 'X-Salada'
+                    break
+
+                case 2:
+                    res.innerHTML = 'X-Tudo'
+                    break
+
+                case 3:
+                    res.innerHTML = 'McLanche'
+                    break
+
+                case 4:
+                    res.innerHTML = 'Burguer King'
+                    break
+
+                default:
+                    res.innerHTML = 'Dados inválidos'
+                    break
+            }
+        }
+
+    </script>
+</body>
+</html>
