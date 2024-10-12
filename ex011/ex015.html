@@ -3,6 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: lightgray;
+        }
+
+        div#bloco {
+            background-color: aquamarine;
+            width: 500px;
+            margin: auto;
+            padding: 0px 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input[type=number] {
+            margin-bottom: 10px;
+        }
+
+        p#resultado {
+            background-color: burlywood;
+            text-align: center;
+        }
+
+        button {
+
+            display: flex;
+            width: 53px;
+            height: 21px;
+            margin-left: 240px;
+        }
+    </style>
     <title>Cardápio</title>
 </head>
 <body>
@@ -17,7 +52,8 @@
         <p>Opção 4: Burguer King</p>
 
         <input type="number" name="lanche" id="lanche" placeholder="Digite sua opção (número)">
-        <input type="submit" value="Enviar" onclick="escolha()">
+        <input type="submit" value="Enviar" id="bt1" onclick="escolha()">
+        <input type="submit" value="Limpar" id="bt2">
 
         <p id="resultado"></p>
 
@@ -25,41 +61,63 @@
 
     <script>
 
+        var botao2 = document.getElementById('bt2')
+        botao2.disabled = true
+
         function escolha() {
             
+            var botao1 = document.getElementById('bt1')            
             var cardapio = document.getElementById('lanche')
             var res = document.getElementById('resultado')
 
-            /*0 = 'cachorro-quente'
-            1 = 'x-salada'
-            2 = 'supersamduba'
-            3 = 'lombada'*/
+            var valor = Number(cardapio.value)
 
-            switch(cardapio) {
+            switch(valor) { // switch é uma condição de escolha
                 case 0:
-                    res.innerHTML = 'Cachorro-Quente'
+                    res.innerHTML = 'Você escolheu <strong>Cachorro-Quente!</strong> Aguarde que logo ficará pronto.'                    
                     break
 
                 case 1:
-                    res.innerHTML = 'X-Salada'
+                    res.innerHTML = 'Você escolheu <strong>X-Salada!</strong> Aguarde que logo ficará pronto.'                    
                     break
 
                 case 2:
-                    res.innerHTML = 'X-Tudo'
+                    res.innerHTML = 'Você escolheu <strong>X-Tudo!</strong> Aguarde que logo ficará pronto.'                    
                     break
 
                 case 3:
-                    res.innerHTML = 'McLanche'
+                    res.innerHTML = 'Você escolheu <strong>McLanche!</strong> Aguarde que logo ficará pronto.'                    
                     break
 
                 case 4:
-                    res.innerHTML = 'Burguer King'
+                    res.innerHTML = 'Você escolheu <strong>Burguer King!</strong> Aguarde que logo ficará pronto.'                    
                     break
 
                 default:
-                    res.innerHTML = 'Dados inválidos'
+                    res.innerHTML = 'Por favor, digite valores válidos!'
                     break
             }
+
+            botao1.disabled = true;
+            cardapio.disabled = true;
+            botao2.disabled = false;
+            botao2.addEventListener('click', limpar);
+
+        }
+
+        function limpar() {
+
+            var botao1 = document.getElementById('bt1');
+            var cardapio = document.getElementById('lanche');
+            var res = document.getElementById('resultado');
+            var botao2 = document.getElementById('bt2');
+
+            cardapio.value = '';
+            res.innerHTML = '';
+
+            botao1.disabled = false;
+            cardapio.disabled = false;
+            botao2.disabled = true;
         }
 
     </script>
