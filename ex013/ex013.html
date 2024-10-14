@@ -90,12 +90,14 @@
 
             var valor = Number(num.value);
 
-            if (valor < 0) { // Leia-se (se valor for menor que zero)
+            if (valor == '') {
+                resposta.innerHTML = 'Por favor, digite um valor válido!'
+            } else if (valor < 0) { // Leia-se (se valor for menor que zero)
                 resposta.innerHTML = 'Número negativo';
             } else if (valor > 0) { // Leia-se (se valor for maior que zero)
                 resposta.innerHTML = 'Número positivo';
             } else {
-                resposta.innerHTML = 'Número zero';
+                resposta.innerHTML = 'Sem dados';
             }
 
             botaoEnviar.disabled = true;
