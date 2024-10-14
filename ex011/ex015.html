@@ -9,7 +9,7 @@
         }
 
         div#bloco {
-            background-color: aquamarine;
+            background-color: rgb(230, 160, 56);
             width: 500px;
             margin: auto;
             padding: 0px 10px;
@@ -22,11 +22,12 @@
         }
 
         input[type=number] {
+            width: 190px;
             margin-bottom: 10px;
         }
 
         p#resultado {
-            background-color: burlywood;
+            background-color: rgb(212, 182, 236);
             text-align: center;
         }
 
@@ -45,11 +46,11 @@
 
         <h1>Escolha sua opção de lanche</h1>
 
-        <p>Opção 0: Cachorro-Quente</p>
-        <p>Opção 1: X-Salada</p>
-        <p>Opção 2: X-Tudo</p>
-        <p>Opção 3: McLanche</p>
-        <p>Opção 4: Burguer King</p>
+        <p id="zero">Opção 0: Cachorro-Quente</p>
+        <p id="um">Opção 1: X-Salada</p>
+        <p id="dois">Opção 2: X-Tudo</p>
+        <p id="tres">Opção 3: McLanche</p>
+        <p id="quatro">Opção 4: Burguer King</p>
 
         <input type="number" name="lanche" id="lanche" placeholder="Digite sua opção (número)">
         <input type="submit" value="Enviar" id="bt1" onclick="escolha()">
@@ -61,41 +62,56 @@
 
     <script>
 
-        var botao2 = document.getElementById('bt2')
-        botao2.disabled = true
+        var botao2 = document.getElementById('bt2');
+        botao2.disabled = true;
 
         function escolha() {
             
-            var botao1 = document.getElementById('bt1')            
-            var cardapio = document.getElementById('lanche')
-            var res = document.getElementById('resultado')
+            var botao1 = document.getElementById('bt1');           
+            var cardapio = document.getElementById('lanche');
+            var res = document.getElementById('resultado');
 
-            var valor = Number(cardapio.value)
+            var valor = Number(cardapio.value);
 
-            switch(valor) { // switch é uma condição de escolha
+            if (cardapio.value == '') {
+                res.innerHTML = 'Por favor, digite algum valor da lista';
+            } else {
+                switch(valor) { // switch é uma condição de escolha
+                
                 case 0:
-                    res.innerHTML = 'Você escolheu <strong>Cachorro-Quente!</strong> Aguarde que logo ficará pronto.'                    
+                    res.innerHTML = 'Você escolheu <strong>Cachorro-Quente!</strong> Aguarde que logo ficará pronto.';
+                    document.getElementById('zero').style.backgroundColor = 'green';
+                    document.getElementById('zero').style.color = 'white';
                     break
 
                 case 1:
-                    res.innerHTML = 'Você escolheu <strong>X-Salada!</strong> Aguarde que logo ficará pronto.'                    
+                    res.innerHTML = 'Você escolheu <strong>X-Salada!</strong> Aguarde que logo ficará pronto.';
+                    document.getElementById('um').style.backgroundColor = 'green';
+                    document.getElementById('um').style.color = 'white';              
                     break
 
                 case 2:
-                    res.innerHTML = 'Você escolheu <strong>X-Tudo!</strong> Aguarde que logo ficará pronto.'                    
+                    res.innerHTML = 'Você escolheu <strong>X-Tudo!</strong> Aguarde que logo ficará pronto.';
+                    document.getElementById('dois').style.backgroundColor = 'green';
+                    document.getElementById('dois').style.color = 'white';                   
                     break
 
                 case 3:
-                    res.innerHTML = 'Você escolheu <strong>McLanche!</strong> Aguarde que logo ficará pronto.'                    
+                    res.innerHTML = 'Você escolheu <strong>McLanche!</strong> Aguarde que logo ficará pronto.';
+                    document.getElementById('tres').style.backgroundColor = 'green';
+                    document.getElementById('tres').style.color = 'white';                    
                     break
 
                 case 4:
-                    res.innerHTML = 'Você escolheu <strong>Burguer King!</strong> Aguarde que logo ficará pronto.'                    
+                    res.innerHTML = 'Você escolheu <strong>Burguer King!</strong> Aguarde que logo ficará pronto.';
+                    document.getElementById('quatro').style.backgroundColor = 'green';
+                    document.getElementById('quatro').style.color = 'white';                    
                     break
 
                 default:
-                    res.innerHTML = 'Por favor, digite valores válidos!'
+                    res.innerHTML = 'Por favor, digite valores da lista!';
                     break
+                }
             }
 
             botao1.disabled = true;
@@ -114,6 +130,21 @@
 
             cardapio.value = '';
             res.innerHTML = '';
+
+            document.getElementById('zero').style.backgroundColor = '';
+            document.getElementById('zero').style.color = '';
+
+            document.getElementById('um').style.backgroundColor = '';
+            document.getElementById('um').style.color = '';
+
+            document.getElementById('dois').style.backgroundColor = '';
+            document.getElementById('dois').style.color = '';
+
+            document.getElementById('tres').style.backgroundColor = '';
+            document.getElementById('tres').style.color = '';
+
+            document.getElementById('quatro').style.backgroundColor = '';
+            document.getElementById('quatro').style.color = '';
 
             botao1.disabled = false;
             cardapio.disabled = false;
