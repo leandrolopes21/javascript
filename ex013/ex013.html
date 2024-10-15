@@ -61,7 +61,7 @@
 
         <div id="funcao">
 
-            <input type="number" name="numero" id="numero">
+            <input type="number" name="numero" id="numero" required>
 
             <!-- <div type="button" id="bt1">Enviar</div> -->
             
@@ -90,14 +90,12 @@
 
             var valor = Number(num.value);
 
-            if (valor == '') {
-                resposta.innerHTML = 'Por favor, digite um valor válido!'
+            if (valor == 0) {
+                resposta.innerHTML = 'Sem valor'
             } else if (valor < 0) { // Leia-se (se valor for menor que zero)
                 resposta.innerHTML = 'Número negativo';
-            } else if (valor > 0) { // Leia-se (se valor for maior que zero)
+            } else { // Leia-se (senão)
                 resposta.innerHTML = 'Número positivo';
-            } else {
-                resposta.innerHTML = 'Sem dados';
             }
 
             botaoEnviar.disabled = true;
