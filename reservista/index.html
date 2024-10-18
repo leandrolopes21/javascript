@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        body {
+            background-color: aliceblue;
+        }
+
+        div#principal {
+            background-color: rgb(164, 248, 248);
+            width: 500px;
+            border: 1px solid black;
+            border-radius: 15px;
+            margin: auto;
+            padding: 15px;
+            text-align: center;
+        }
+
+        input[type=number] {
+            width: 100px;
+            height: 20px;         
+        }
+
+        input[type=submit] {
+            width: 70px;
+            height: 25px;
+            cursor: pointer;
+            font-weight: bold;         
+        }
+
+        /* div#bt1 {
+            background-color: white;
+            border: 1px solid black;
+            width: 100px;
+            height: 20px;
+            margin: 10px auto;
+            padding: 1px;
+            cursor: pointer;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+        } */
+
+
+    </style>
+    <title>Reservista</title>
+</head>
+<body>
+
+    <!-- Aplicação simples utilizando Javascript para verificar se o reservista vai ou não para uma guerra -->
+
+    <div id="principal">
+        <h1>Bloco de teste Reservista</h1>
+
+        <h3>Vamos testar?</h3>
+
+        <div id="funcao">
+
+            <input type="number" name="numero" id="numero">
+
+            <!-- <div type="button" id="bt1">Enviar</div> -->
+            
+            <input type="submit" value="Enviar" id="bt1" onclick="calcule()">
+            <input type="submit" value="Limpar" id="bt2" onclick="limpar()">
+
+            <p id="res"></p>
+
+        </div>
+    </div>
+
+    <script>
+        
+        var resposta = document.getElementById('res');
+        var num = document.getElementById('numero');
+        var botaoEnviar = document.getElementById('bt1');
+        var botaoLimpar = document.getElementById('bt2');
+
+        botaoLimpar.disabled = true;
+        
+        /*botaoEnviar.addEventListener('click', calcule);*/
+        
+        /*botaoEnviar.addEventListener('click', criarBotao);*/
+        
+        function calcule() {
+
+            var valor = Number(num.value);
+
+            if (valor == '') { // Leia-se (se valor for menor que 16 ou maior que 65)
+                resposta.innerHTML = 'Sem dados!';
+            } else if (valor < 16 || valor > 65) { // Leia-se (se valor for menor que 18)
+                resposta.innerHTML = 'Você não é reservista!';
+            } else {
+                resposta.innerHTML = 'Você é reservista e se houver uma guerra é obrigatória sua apresentação!';
+            }
+
+            botaoEnviar.disabled = true;
+            num.disabled = true;
+            botaoLimpar.disabled = false;
+            
+        }
+
+        /*function criarBotao() { (Aqui é uma função para criação automática de botão temporário)
+
+            var botaoLimpar = document.createElement("button");
+            var div = document.getElementById('principal');
+            botaoLimpar.textContent('Limpar');
+            div.appendChild(botaoLimpar);
+            botaoLimpar.addEventListener('click', limpar);
+
+        }*/
+
+        function limpar() {
+
+            resposta.innerHTML = "";
+            num.value = "";
+            botaoEnviar.disabled = false;
+            num.disabled = false;
+            botaoLimpar.disabled = true;
+        }
+
+    </script>
+</body>
+</html>
