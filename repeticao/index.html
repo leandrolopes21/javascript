@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador</title>
+</head>
+<body>
+    <section>
+        <h1>Função Contador</h1>
+        <div id="contador">
+            <p>
+                <label for="valor">Digite um valor máximo para o Contador: </label>
+                <input type="number" name="valor" id="valor">
+            </p>
+            <!-- <p>
+                <label for="num">Digite o intervalo entre valores</label>
+                <input type="number" name="num" id="num">
+            </p> -->
+            <p>
+                <input type="button" value="Começar" onclick="contador()">
+            </p>
+        </div>
+        <div>
+            <p id="res">Resposta</p>
+        </div>
+    </section>
+
+    <script>
+
+        function contador() {
+
+            var digitado = document.getElementById('valor')
+            /* var i = document.getElementById('num') */
+            var res = document.getElementById('res')
+
+            num1 = Number(digitado.value)
+            /* num2 = Number(i.value) */
+
+            var i = 0
+
+            while (i <= num1) {
+                res.innerHTML = `Número ${i}`
+                i++
+            }
+        }        
+
+    </script>
+    
+</body>
+</html>
