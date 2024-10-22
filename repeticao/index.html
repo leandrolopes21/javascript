@@ -22,7 +22,7 @@
             border: 1px solid black;
             border-radius: 10px;
         }
-        
+
     </style>
 
     <title>Contador</title>
@@ -72,6 +72,7 @@
             var div = document.getElementById('contador')
             botaoLimpar.textContent = 'Limpar'
             div.appendChild(botaoLimpar)
+            botaoLimpar.setAttribute('id', 'bt2')
             botaoLimpar.addEventListener('click', limpar)
         }
         
@@ -91,7 +92,9 @@
             fim.disabled = false
             botaoComecar.disabled = false
 
+            var botaoLimpar = document.getElementById('bt2')
             botaoLimpar.parentNode.removeChild(botaoLimpar)
+
         }
 
     </script>
