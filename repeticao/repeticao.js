@@ -3,12 +3,12 @@ Exemplo de estrutura de repetição while(condição), que primeiro testa a cond
 */
 
 
-var i = 0
+/* var i = 0
 
 while (i <= 30000) { // Leia enquanto a variável i for menor ou igual a 500000
     console.log(`Número ${i}`) //Apresenta na tela o valor de i enquanto a condição acima for verdadeira
     i++ // É o mesmo que i = i + 1
-}
+} */
 
 /*
 Exemplo de estrutura de repetição do {} while(condição) que primeiro executa a condição
@@ -20,3 +20,7 @@ do {
     i++ // É o mesmo que i = i + 1
 } while (i <= 500000); // Leia enquanto a variável i for menor ou igual a 500000
  */
+
+/* for (var i = 0; i <= 10000; i++) {
+    console.log(`Número ${i}`)
+}*/
