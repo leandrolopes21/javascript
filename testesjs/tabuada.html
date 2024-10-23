@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+
+            background-color: lightgray;
+
+        }
+
+        main { /* Referente ao bloco da Tabuada */
+
+            background-color: rgb(85, 78, 78);
+            color: white;
+            width: 325px;
+            margin: 5px auto;
+            padding: 10px;
+            text-align: center;
+            border: 5px solid blue;
+            border-radius: 10px;
+
+            display: flex;
+            flex-flow: column nowrap;
+
+        }
+
+        input#num, #bt1, #bt2 {
+
+            width: 60px;
+        }
+
+        ul {
+            background-color: white;
+            color: black;
+            width: 40%;
+            border-radius: 5px;
+        }
+
+        .no-marker {
+            list-style-type: none;
+        }
+    </style>
+
+    <title>Tabuada</title>
+</head>
+<body>
+    <main>
+        <h1>Tabuada</h1>
+        <section>
+            <div>
+                <p>
+                    <label for="num">Digite seu número: </label>
+                    <input type="number" name="num" id="num" required>
+                    <input type="button" value="Calcular" id="bt1" onclick="verificar()">
+                    <input type="button" value="Limpar" id="bt2" onclick="limpar()">
+                </p>
+                <ul id="resposta"></ul>
+            </div>
+        </section>
+    </main>
+
+    <script>
+
+        // Este é o código corrigido pelo Copilot
+
+        var bt1 = document.getElementById('bt1')
+        var bt2 = document.getElementById('bt2')
+        var num = document.getElementById('num')
+        var resposta = document.getElementById('resposta')
+
+        bt2.disabled = true
+
+        function verificar() {
+            
+            var valor = num.value.trim()
+            resposta.innerHTML = ''
+
+            if (valor == '') {
+
+                resposta.innerHTML = 'Sem dados digitados!'
+                num.disabled = true                
+                bt1.disabled = true
+                bt2.disabled = false
+
+            } else {
+
+                calcular()
+                num.disabled = true
+                bt1.disabled = true
+                bt2.disabled = false
+
+            }
+
+        }
+
+        function calcular() {
+
+            var valor = Number(num.value)
+            resposta.innerHTML = ''
+
+            for (var i = 1; i <= 10; i++) {
+                var res = valor * i
+                var lista = document.createElement('li')
+                lista.textContent = `${valor} x ${i} = ${res}`
+                resposta.appendChild(lista)
+            }
+
+        }
+
+        var semMarker = document.getElementById('resposta') // Cria a variável serMarker e faz ligação dela com o item HTML ul com id='resposta'
+
+        semMarker.classList.add('no-marker') // Chama a classe no-marker definida no CSS
+
+        function limpar() {
+
+            resposta.innerHTML = ''
+
+            num.value = ''
+            num.disabled = false
+            bt1.disabled = false
+            bt2.disabled = true
+
+
+        }
+
+        // Meu código original abaixo
+
+        /* var bt1 = document.getElementById('bt1')
+        var bt2 = document.getElementById('bt2')
+        var num = document.getElementById('num').value
+        var resposta = document.getElementById('resposta')
+
+        bt2.disabled = true
+
+        function verificar() {
+
+            num = document.getElementById('num').value
+            resposta = document.getElementById('resposta')            
+
+            if (num.trim() == '') {
+
+                resposta.innerHTML = 'Sem dados digitados!'                
+                bt1.disabled = true
+                bt2.disabled = false
+                num.disabled = true
+
+            } else {
+
+                calcular()
+                num.disabled = true
+                bt1.disabled = true
+                bt2.disabled = false
+                num.disabled = true
+
+            }
+
+        }
+
+        function calcular() {
+
+            var num = document.getElementById('num')
+            var resposta = document.getElementById('resposta')
+
+            var valor = Number(num.value)
+
+            for (var i = 1; i <= 10; i++) {
+                var res = valor * i
+                var lista = document.createElement('li')
+                lista.textContent = `${valor} x ${i} = ${res}`
+                resposta.appendChild(lista)
+            }
+
+        }
+
+        var semMarker = document.getElementById('resposta') // Cria a variável serMarker e faz ligação dela com o item HTML ul com id='resposta'
+
+        semMarker.classList.add('no-marker') // Chama a classe no-marker definida no CSS */
+
+    </script>
+</body>
+</html>
