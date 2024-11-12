@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Analisador de Números</title>
+</head>
+<body>
+    <header>
+        <h1>Analisador de Números</h1>
+    </header>
+
+    <section>
+        <div id="principal">
+            <p>Digite um número:
+                <input type="number" name="num" id="num">
+                <input type="button" value="Verificar" id="bt1" onclick="verificar()">
+                <input type="button" value="Limpar" id="bt2" onclick="finalizar()">
+            </p>
+        </div>
+
+        <div id="res">
+            
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; By Leandro Lopes</p>
+    </footer>
+
+    <script>
+
+        let num = document.getElementById('num')
+        let res = document.getElementById('res')
+        let botaoVerificar = document.getElementById('bt1')
+        let botaoFinalizar = document.getElementById('bt2')
+
+        botaoFinalizar.disabled = true
+
+        function verificar() {
+
+            num.disabled = true
+            botaoVerificar.disabled = true
+            botaoFinalizar.disabled = false
+            
+            /* let valor = Number(num.value) */
+
+            let valor = [Number(num.value)]
+            res.innerHTML = `Seu número digitado: ${valor}`
+
+            valor[1] = 6
+
+            res.innerHTML = `Seu número incluso: ${valor}`
+
+        }
+
+        function finalizar() {
+
+            num.disabled = false
+            botaoVerificar.disabled = false
+            botaoFinalizar.disabled = true
+
+            num.value = ''
+            num.focus()
+            res.innerHTML = ''
+            
+        }
+
+        /*
+        num[4] = 6 // Aqui a variável num recebe o número 6 na quinta posição do vetor
+
+        console.log(`Agora seu vetor mudou, é composto por: ${num}`)
+
+        num.push(7) // num.push inclui mais um elemento ao final do vetor existente
+
+        console.log(`Agora seu vetor mudou novamente, é composto por: ${num}`)
+
+        // num.length apresenta a quantidade de elementos que está no vetor
+
+        console.log(`Seu vetor possui ${num.length} elementos`)
+
+        console.log(`Colocamos os elementos do seu vetor em ordem crescente: ${num.sort()}`)
+        */
+
+    </script>
+</body>
+</html>
