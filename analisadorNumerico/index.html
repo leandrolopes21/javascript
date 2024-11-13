@@ -15,14 +15,16 @@
     <section>
         <div id="principal">
             <p>Digite um número:
-                <input type="number" name="num" id="num">
+                <input type="number" name="num" id="num" required>
                 <input type="button" value="Verificar" id="bt1" onclick="verificar()">
                 <input type="button" value="Limpar" id="bt2" onclick="finalizar()">
             </p>
         </div>
 
-        <div id="res">
-            
+        <div id="respostas">
+            <p id="resp1"></p>
+            <p id="resp2"></p>
+            <p id="resp3"></p>
         </div>
     </section>
 
@@ -33,7 +35,10 @@
     <script>
 
         let num = document.getElementById('num')
-        let res = document.getElementById('res')
+        let res = document.getElementById('respostas')
+        let resp1 = document.getElementById('resp1')
+        let resp2 = document.getElementById('resp2')
+        let resp3 = document.getElementById('resp3')
         let botaoVerificar = document.getElementById('bt1')
         let botaoFinalizar = document.getElementById('bt2')
 
@@ -48,11 +53,24 @@
             /* let valor = Number(num.value) */
 
             let valor = [Number(num.value)]
-            res.innerHTML = `Seu número digitado: ${valor}`
 
-            valor[1] = 6
+            if (num.value.trim() == '') {
 
-            res.innerHTML = `Seu número incluso: ${valor}`
+                resp1.innerHTML = 'Por favor, digite um número válido!'
+                
+            } else {
+
+                if (valor % 2 == 0) {
+
+                    resp1.innerHTML = 'Seu número é par!'
+
+                } else {
+
+                    resp1.innerHTML = 'Seu número é ímpar!'
+                }
+            }
+            
+            resp2.innerHTML = `Seu número digitado - 100 é: ${valor - 100}`
 
         }
 
@@ -64,7 +82,9 @@
 
             num.value = ''
             num.focus()
-            res.innerHTML = ''
+            resp1.innerHTML = ''
+            resp2.innerHTML = ''
+            resp3.innerHTML = ''
             
         }
 
