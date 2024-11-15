@@ -46,9 +46,11 @@
         let botaoVerificar = document.getElementById('bt1')
         let botaoFinalizar = document.getElementById('bt2')
 
+        botaoFinalizar.disabled = true
+
         function verificar() {
 
-            let valor = Number(num.value)
+            var valor = Number(num.value)
 
             if (num.value.trim() == '') {
 
@@ -66,6 +68,8 @@
                 paragrafo.textContent = `Você digitou o número ${valor}`
                 res.appendChild(paragrafo)
 
+                botaoFinalizar.disabled = false
+
             }
 
         }
@@ -81,24 +85,26 @@
 
         }
 
+        function finalizar() {
+
+            let resFinal = document.getElementById('final')
+            resFinal.innerHTML = `Resultado:`
+
+            criaBotaoLimpar()
+            
+        }
+
         function limpar() {
 
+            num.value = ''
             num.disabled = false
             botaoVerificar.disabled = false
-            botaoFinalizar.disabled = false
 
             res.innerHTML = ''
 
             let botaoLimpar = document.getElementById('bt3')
             botaoLimpar.parentNode.removeChild(botaoLimpar)
-            
-        }
 
-        function finalizar() {
-
-            let resFinal = document.getElementById('final')
-            resFinal.innerHTML = `${valor}`
-            
         }
 
         /*
