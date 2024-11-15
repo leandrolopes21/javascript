@@ -24,6 +24,14 @@
         <div id="res">
             
         </div>
+
+        <div id="botao">
+            
+        </div>
+
+        <div id="final">
+            Resposta Final
+        </div>
     </section>
 
     <footer>
@@ -45,21 +53,51 @@
             if (num.value.trim() == '') {
 
                 res.innerHTML = 'Por favor, digite um número válido!'
+
+                num.disabled = true
+                botaoVerificar.disabled = true
+                botaoFinalizar.disabled = true
+
+                criaBotaoLimpar()
                 
             } else {
 
                 let paragrafo = document.createElement('p')
-                paragrafo.textContent = `${valor}`
+                paragrafo.textContent = `Você digitou o número ${valor}`
+                res.appendChild(paragrafo)
 
             }
 
         }
 
+        function criaBotaoLimpar() {
+            
+            let botaoLimpar = document.createElement('button')
+            let div = document.getElementById('botao')
+            botaoLimpar.textContent = 'Limpar'
+            div.appendChild(botaoLimpar)
+            botaoLimpar.setAttribute('id', 'bt3')
+            botaoLimpar.addEventListener('click', limpar)
+
+        }
+
+        function limpar() {
+
+            num.disabled = false
+            botaoVerificar.disabled = false
+            botaoFinalizar.disabled = false
+
+            res.innerHTML = ''
+
+            let botaoLimpar = document.getElementById('bt3')
+            botaoLimpar.parentNode.removeChild(botaoLimpar)
+            
+        }
+
         function finalizar() {
 
-            num.value = ''
-            num.focus()
-            respostas.innerHTML = ''
+            let resFinal = document.getElementById('final')
+            resFinal.innerHTML = `${valor}`
             
         }
 
