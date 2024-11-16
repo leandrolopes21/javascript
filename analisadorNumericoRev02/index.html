@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Analisador Numérico</title>
+</head>
+<body>
+    <header>
+        <h1>Analisador Numérico</h1>
+    </header>
+
+    <section>
+        <div id="principal">
+            <p>Digite um número:
+                <input type="number" name="num" id="num" required>
+                <input type="button" value="Verificar" id="bt1" onclick="verificar()">
+                <input type="button" value="Finalizar" id="bt2" onclick="finalizar()">
+            </p>
+        </div>
+
+        <div id="res">
+            
+        </div>
+
+        <div id="botao">
+            
+        </div>
+
+        <div id="final">
+            Resposta Final
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; By Leandro Lopes</p>
+    </footer>
+
+    <script>
+
+        let numeros = [] // Aqui foi criado um vetor
+
+        function verificar() {
+
+            let numeroDigitado = document.getElementById('num').value
+
+            if (!isNaN(numeroDigitado) && numeroDigitado !== '') {
+                numeros.push(Number(numeroDigitado))
+                document.getElementById('num').value = ''
+                document.getElementById('res').innerHTML = 'Array: ' + numeros.join(', ')
+            } else {
+                document.getElementById('res').innerHTML = 'Por favor, digite um número!'
+            }
+
+            let total = document.getElementById('final')
+            total.innerHTML = numeros
+            
+        }
+
+    </script>
+</body>
+</html>
