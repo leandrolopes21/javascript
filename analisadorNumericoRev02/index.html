@@ -25,12 +25,12 @@
             
         </div>
 
-        <div id="botao">
+        <div id="final">
             
         </div>
 
-        <div id="final">
-            Resposta Final
+        <div id="limpar">
+
         </div>
     </section>
 
@@ -75,6 +75,7 @@
                 valores.push(Number(num.value))
                 let item = document.createElement('option')
                 item.text = `Valor ${num.value} adicionado.`
+                item.value = num.value // Adiciona um valor ao item para referência futura
                 lista.appendChild(item)
                 resFinal.innerHTML = ''
                 
@@ -84,6 +85,8 @@
 
             num.value = ''
             num.focus()
+
+            botaoFinalizar.disabled = false
             /*
             Esta function analisa as duas function anteriores, se verdadeiras retorna o valor digitado, se falsas retorna valor invalido ou já encontrado.
             */
@@ -111,9 +114,34 @@
                 resFinal.innerHTML += `<p>O menor valor informado foi ${menor}`
                 resFinal.innerHTML += `<p>A soma de todos os valores digitados é ${soma}`
                 resFinal.innerHTML += `<p>A média de todos os valores digitados é ${media.toFixed(3)}`
-            }
 
-            botaoFinalizar.disabled = true
+                botaoFinalizar.disabled = true
+
+                criaBotaoLimpar()
+            }
+        }
+
+        function criaBotaoLimpar() {
+            
+            let botaoLimpar = document.createElement('button')
+            let div = document.getElementById('limpar')
+            botaoLimpar.textContent = 'Limpar'
+            div.appendChild(botaoLimpar)
+            botaoLimpar.setAttribute('id', 'bt3')
+            botaoLimpar.addEventListener('click', limpar)
+
+        }
+
+        function limpar() {
+            
+            resFinal.innerHTML = ''
+            lista.innerHTML = '' // Remove todo o conteúdo da lista
+            valores = [] //Limpa o array de valores
+
+            let botaoLimpar = document.getElementById('bt3')
+            botaoLimpar.parentNode.removeChild(botaoLimpar)
+
+            botaoFinalizar.disabled = false
         }
 
     </script>
