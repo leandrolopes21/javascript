@@ -10,7 +10,8 @@ while (chute != numeroSecreto) {
     chute = window.prompt('Digite um número entre 1 e 10');
 
     if(chute == numeroSecreto) {
-        alert(`Parabéns, você acertou o número secreto (${numeroSecreto}) em ${tentativas} tentativas!`);
+        break;
+        
     } else {
         if(chute > numeroSecreto) {
             alert(`Seu palpite (${chute}) é maior que o número secreto, tente novamente!`);
@@ -19,4 +20,10 @@ while (chute != numeroSecreto) {
         }
         tentativas++;
     } 
+}
+
+if(tentativas > 1) {
+    alert(`Parabéns, você acertou o número secreto (${numeroSecreto}) em ${tentativas} tentativas!`);
+} eles {
+    alert(`Parabéns, você acertou o número secreto (${numeroSecreto}) em ${tentativas} tentativa!`);
 }
