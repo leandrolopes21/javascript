@@ -1,0 +1,124 @@
+body {
+
+    background-image: url(LOGO\ CAESA.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font: normal 10pt Arial;
+}
+
+header {
+
+    color: white;
+    text-align: center;
+
+}
+
+section {
+
+    background-color: white;
+    border-radius: 15px;
+    width: 460px;
+    margin: auto;
+    padding: 15px;
+    border: 3px solid black;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.473);
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+}
+
+div#principal {
+
+    width: 90%;
+    margin: 10px 10px;
+    padding: 0px 5px;
+    
+    border: 1px solid black;
+    border-radius: 5px;
+
+    display: flex;
+    flex-flow: column nowrap;    
+
+}
+
+div#principal > p {
+
+    margin: 5px; 
+
+}
+
+label {
+
+    font-size: 1.15em;
+}
+
+input[type=text] {
+
+    width: 90px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+input[type=number] {
+
+    width: 70px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+input[type=button] {
+
+    width: 100px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+button {
+
+    width: 70px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+div#res {
+
+    width: 90%;
+    text-align: center;
+    margin: 10px 10px;
+    padding: 0px 5px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+}
+
+div#res > p {
+
+    margin: 5px; 
+
+}
+
+h2 {
+
+    text-align: center;
+}
+
+div#limpar {
+
+    width: 80%;
+    text-align: center;
+    margin: 10px 0px 0px 0px;
+}
+
+footer {
+    
+    color: white;
+    text-align: center;
+    font-style: italic;
+
+}

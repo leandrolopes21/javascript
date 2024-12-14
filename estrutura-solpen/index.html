@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon">
+    <title>Dados Técnicos</title>
+</head>
+<body>
+    <header>
+        <h1>Estrutura</h1>
+        <p><strong>Este é apenas um teste de cálculo...</strong></p>
+    </header>
+
+    <section>
+        <div>
+            <label for="Nome da Peça: "><strong>Nome da peça Caesa:</strong> </label>
+            <input type="text" name="peca" id="peca" oninput="this.value = this.value.toUpperCase()" required>
+
+            <!-- O evento oninput acima, converte tudo que for digitado na caixa de texto, para letras maiúsculas -->
+            <!-- this.value refere-se ao valor atual do texto digitado -->
+
+        </div>
+        <div id="principal">
+            <p><strong>Características Técnicas</strong></p>
+            <p>Comprimento (mm):
+                <input type="number" name="num1" id="num1" required>
+            </p>
+            <p>Largura (mm):
+                <input type="number" name="num2" id="num2" required>
+            </p>
+            <p>Espessura (mm):
+                <input type="number" name="num3" id="num3" required>
+            </p>
+            <p>
+                <input type="button" value="Calcular" id="bt1" onclick="verificar()">
+                <input type="button" value="Limpar Dados" id="bt2" onclick="limpar()">
+            </p>
+        </div>
+
+        <div id="res">
+            <p id="resultado"></p>
+            <p id="m2"></p>
+            <p id="peso"></p>
+            <p id="tinta"></p>
+        </div>
+
+        <div id="resultAnt">
+            <h2>Resultados Anteriores</h2>
+            <ul id="lista-resultados"></ul>
+        </div>
+
+        <div id="limpar">
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; By Leandro Lopes</p>
+    </footer>
+
+    <script>
+
+        var peca = document.getElementById('peca')        
+        var num1 = document.getElementById('num1')
+        var num2 = document.getElementById('num2')
+        var num3 = document.getElementById('num3')
+        var botaoCalcular = document.getElementById('bt1')
+        var botaoLimpar = document.getElementById('bt2')
+        var res = document.getElementById('res')
+        var resultado = document.getElementById('resultado')
+        var resMetroQuad = document.getElementById('m2')
+        var resPeso = document.getElementById('peso')
+        var resTinta = document.getElementById('tinta')
+        var listaResultados = document.getElementById('lista-resultados')
+        var metroQuad
+        var peso
+        var tinta
+
+        botaoLimpar.disabled = true
+        
+        function verificar() {
+
+            if (peca.value.trim() == "" || num1.value.trim() == "" || num2.value.trim() == "" || num3.value.trim() == "") {
+                alert("Digite valores válidos!")
+            } else {
+                calcular()
+            }
+            
+        }
+
+        function calcular() {
+
+            var textoPeca = String(peca.value)
+            var val1 = Number(num1.value)
+            var val2 = Number(num2.value)
+            var val3 = Number(num3.value)
+
+            metroQuad = (val1/1000) * (val2/1000)
+            peso = metroQuad * val3 * 8
+            tinta = (metroQuad * 2) / 3.6
+
+            resultado.innerHTML = `<strong>Resultado Peça ${textoPeca}</strong>`
+            resMetroQuad.innerHTML = `<strong>Metro²:</strong> ${metroQuad.toFixed(3)} m²`
+            resPeso.innerHTML = `<strong>Peso (Kg):</strong> ${peso.toFixed(3)} Kg`
+            resTinta.innerHTML = `<strong>Tinta (Kg):</strong> ${tinta.toFixed(3)} Kg`
+
+            var itemResultado = document.createElement('li')
+            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} | <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`
+            listaResultados.appendChild(itemResultado)            
+
+            peca.disabled = true
+            num1.disabled = true
+            num2.disabled = true
+            num3.disabled = true
+            botaoCalcular.disabled = true
+            res.style.backgroundColor = "lightgray"
+            
+            botaoLimpar.disabled = false
+            // criaBotaoLimpar()
+        }
+
+        /*
+        function criaBotaoLimpar() {
+            
+            let botaoLimpar = document.createElement('button')
+            let div = document.getElementById('principal')
+            botaoLimpar.textContent = 'Limpar'
+            div.appendChild(botaoLimpar)
+            botaoLimpar.setAttribute('id', 'bt2')
+            botaoLimpar.addEventListener('click', limpar)
+
+        }
+        */
+
+        function limpar() {
+
+            /*
+            let botaoLimpar = document.getElementById('bt2')
+            botaoLimpar.parentNode.removeChild(botaoLimpar)
+            */
+
+            peca.disabled = false
+            num1.disabled = false
+            num2.disabled = false
+            num3.disabled = false
+            botaoCalcular.disabled = false
+            res.style.backgroundColor = ""
+
+            peca.value = ""
+            num1.value = ""
+            num2.value = ""
+            num3.value = ""
+
+            resultado.innerHTML = ""
+            resMetroQuad.innerHTML = ""
+            resPeso.innerHTML = ""
+            resTinta.innerHTML = ""
+
+            peca.focus()
+        }
+
+    </script>
+</body>
+</html>

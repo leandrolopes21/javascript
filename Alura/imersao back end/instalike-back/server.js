@@ -1,5 +1,5 @@
 import express from "express"; // Importa o framework Express para criar a aplicação web
-import routes from "./src/routes/postsRoutes.js";
+import routes from "./src/routes/postsRoutes.js"; // Importa o arquivo de rota
 
 const app = express(); // Cria uma instância do Express, iniciando a aplicação
 
