@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="estilo.css">
     <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon">
     <title>Dados Técnicos</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
 </head>
 <body>
     <header>
         <h1>Cálculo de peça e conjunto</h1>
-        <p><strong>Preencha todos os campos solicitados</strong></p>
+        <h3>* Preencha todos os campos solicitados *</h3>
     </header>
 
     <section>
@@ -49,22 +52,25 @@
             <p>
                 <input type="button" value="Calcular" id="bt1" onclick="verificarDados()">
                 <input type="button" value="Limpar Dados" id="bt2" onclick="limpar()">
+                <input type="button" value="Exportar PDF" id="btExportar" onclick="exportarpdf()">
             </p>
         </div>
-
+        <!--
         <div id="res">
             <p id="resultado"></p>
             <p id="m2"></p>
             <p id="peso"></p>
             <p id="tinta"></p>
         </div>
+        -->
 
         <div id="resultAnt">
             <h3>Estrutura Solpen</h3>
+            <h4>Cálculo do Conjunto</h4>
             <ul id="lista-resultados"></ul>
-            <p id="soma-metroQuad"><strong>Soma do Metro²</strong></p>            
-            <p id="soma-peso"><strong>Soma do Peso: </strong></p>
-            <p id="soma-tinta"><strong>Soma da Tinta: </strong></p>
+            <p id="soma-metroQuad"><strong>Metro² Total:</strong></p>            
+            <p id="soma-peso"><strong>Peso Total: </strong></p>
+            <p id="soma-tinta"><strong>Tinta Total: </strong></p>
         </div>
 
         <div id="limpar">
@@ -146,14 +152,16 @@
             tinta = (metroQuad * 2) / 3.6
 
             // Resultado da peça por unidade
+            /*
             resultado.innerHTML = `<strong>Resultado Peça ${textoPeca} (valor por unidade)</strong>`
             resMetroQuad.innerHTML = `<strong>Metro²:</strong> ${metroQuad.toFixed(3)} m²`
             resPeso.innerHTML = `<strong>Peso (Kg):</strong> ${peso.toFixed(3)} Kg`
             resTinta.innerHTML = `<strong>Tinta (Kg):</strong> ${tinta.toFixed(3)} Kg`
+            */
 
             // Lista que armazena os resultados anteriores
             var itemResultado = document.createElement('li')
-            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} <br> <strong>Quantidade:</strong> ${quantidade}x | <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`
+            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} <strong>Quantidade:</strong> ${quantidade}x <br> * Valores por unidade --> <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`
             listaResultados.appendChild(itemResultado)
             
             // Atualizar as somas totais
@@ -161,9 +169,9 @@
             totalPeso += (peso * quantidade)
             totalTinta += (tinta * quantidade)
 
-            somaMetroQuad.innerHTML = `Soma do Metro²: ${totalMetroQuad.toFixed(3)} M²`
-            somaPeso.innerHTML = `Soma do Peso: ${totalPeso.toFixed(3)} Kg`
-            somaTinta.innerHTML = `Soma da Tinta: ${totalTinta.toFixed(3)} Kg`
+            somaMetroQuad.innerHTML = `Metro² Total: ${totalMetroQuad.toFixed(3)} M²`
+            somaPeso.innerHTML = `Peso Total: ${totalPeso.toFixed(3)} Kg`
+            somaTinta.innerHTML = `Tinta Total: ${totalTinta.toFixed(3)} Kg`
 
             peca.disabled = true
             qtde.disabled = true
@@ -171,7 +179,7 @@
             num2.disabled = true
             num3.disabled = true
             botaoCalcular.disabled = true
-            res.style.backgroundColor = "lightgray"
+            // res.style.backgroundColor = "lightgray"
             
             botaoLimpar.disabled = false
             // criaBotaoLimpar()
@@ -203,7 +211,7 @@
             num2.disabled = false
             num3.disabled = false
             botaoCalcular.disabled = false
-            res.style.backgroundColor = ""
+            // res.style.backgroundColor = ""
 
             peca.value = ""
             qtde.value = ""
@@ -211,10 +219,12 @@
             num2.value = ""
             num3.value = ""
 
+            /*
             resultado.innerHTML = ""
             resMetroQuad.innerHTML = ""
             resPeso.innerHTML = ""
             resTinta.innerHTML = ""
+            */
 
             botaoLimpar.disabled = true
 
@@ -222,6 +232,22 @@
 
             alert(itemResultado)
         }
+
+        function exportarPDF() {
+            const { jsPDF } = window.jspdf;
+
+            let doc = new jsPDF();
+
+            let resultados = document.getElementById('lista-resultados').innerHTML;
+            let texto = `Peça: ${peca.value} \nQuantidade: ${qtde.value} \nMetro² Total: $      {totalMetroQuad.toFixed(3)} m² \nPeso Total: ${totalPeso.toFixed(3)} Kg \nTinta Total: $    {totalTinta.toFixed(3)} Kg`;
+
+            doc.text(texto, 10, 10);
+            doc.text('Resultados:', 10, 30);
+            doc.fromHTML(resultados, 10, 40);
+
+            doc.save('dados_tecnicos.pdf');
+        }
+
 
     </script>
 </body>
