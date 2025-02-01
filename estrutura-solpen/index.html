@@ -12,12 +12,11 @@
 
 </head>
 <body>
-    <header>
-        <h1>Cálculo de peça e conjunto</h1>
-        <h3>* Preencha todos os campos solicitados *</h3>
-    </header>
-
     <section>
+        <div id="header">
+            <h1>Cálculo de peça e conjunto</h1>
+            <h4>* Preencha todos os campos solicitados *</h4>
+        </div>
         <div id="caesa">
             <label for="peca: "><strong>Nome da peça Caesa:</strong> </label>
             <input type="text" name="peca" id="peca" oninput="this.value = this.value.toUpperCase()" required>
@@ -31,13 +30,13 @@
         <div id="principal">
             <h3>Características Técnicas</h3>
             <p id="mater">
-                <input type="radio" name="radmat" id="aco" value="8"> <!-- valor 0 -->
+                <input type="radio" name="radmat" id="Aco" value="8">
                 <label for="aco">Aço Carbono</label>
-                <input type="radio" name="radmat" id="alum" value="2.7"> <!-- valor 1 -->
+                <input type="radio" name="radmat" id="Aluminio" value="2.7">
                 <label for="alum">Alumínio</label>
-                <input type="radio" name="radmat" id="galv" value="8.1"> <!-- valor 2 -->
+                <input type="radio" name="radmat" id="Galvanizado" value="8.1">
                 <label for="galv">Gavanizado</label>
-                <input type="radio" name="radmat" id="inox" value="8.2"> <!-- valor 3 -->
+                <input type="radio" name="radmat" id="Inox" value="8.2">
                 <label for="inox">Inox</label>
             </p>
             <p>Comprimento (mm):
@@ -51,23 +50,21 @@
             </p>
             <p>
                 <input type="button" value="Calcular" id="bt1" onclick="verificarDados()">
-                <input type="button" value="Limpar Dados" id="bt2" onclick="limpar()">
+                <input type="button" value="Novo Dado" id="bt2" onclick="limpar()">
                 <input type="button" value="Exportar PDF" id="btExportar" onclick="exportarPDF()">
+                <input type="button" value="Reiniciar Aplicação" id="btReiniciar" onclick="reiniciar()">
             </p>
         </div>
 
-        <div id="resultAnt">
+        <div id="calculado">
             <h3>Estrutura Solpen</h3>
             <h4>Cálculo do Conjunto</h4>
             <ul id="lista-resultados"></ul>
-            <p id="soma-metroQuad"><strong>Metro² Total:</strong></p>            
-            <p id="soma-peso"><strong>Peso Total: </strong></p>
-            <p id="soma-tinta"><strong>Tinta Total: </strong></p>
+            <p id="soma-metroQuad"></p>            
+            <p id="soma-peso"></p>
+            <p id="soma-tinta"></p>
         </div>
 
-        <div id="limpar">
-
-        </div>
     </section>
 
     <footer>
@@ -76,6 +73,7 @@
 
     <script>
         // Variáveis globais
+        var chapa = document.getElementById('chapa');
         var peca = document.getElementById('peca');
         var qtde = document.getElementById('qtde');       
         var num1 = document.getElementById('num1');
@@ -84,63 +82,65 @@
         var botaoCalcular = document.getElementById('bt1');
         var botaoLimpar = document.getElementById('bt2');
         var botaoExportarPDF = document.getElementById('btExportar');
+        var botaoReiniciar = document.getElementById('btReiniciar');
         var listaResultados = document.getElementById('lista-resultados');
         var somaTinta = document.getElementById('soma-tinta');
         var somaPeso = document.getElementById('soma-peso');
         var somaMetroQuad = document.getElementById('soma-metroQuad');
         var material = document.getElementsByName('radmat');
+        var densidade = 0;
         var totalMetroQuad = 0;
         var totalPeso = 0;
         var totalTinta = 0;
 
         botaoLimpar.disabled = true;
         botaoExportarPDF.disabled = true;
+        botaoReiniciar.disabled = true;
         
-        function verificarDados() {
+        function verificarDados() { // É chamada ao clicar no botão Calcular
 
             if (peca.value.trim() === "" || num1.value.trim() === "" || num2.value.trim() === "" || num3.value.trim() === "" || qtde.value.trim() === "") {
                 alert("Digite valores válidos!");
             } else {
-                calcular();
+                verificarMaterial();
             }            
         }
 
-        /*
         function verificarMaterial() {
 
             if (material[0].checked) {
-                densidade = 8
-                calcular()
+                densidade = 8;               
+                calcular();
             } else if (material[1].checked) {
-                densidade = 2.7
-                calcular()
+                densidade = 2.7;
+                calcular();
             } else if (material[2].checked) {
-                densidade = 8.1
-                calcular()
+                densidade = 8.1;
+                calcular();
             } else if (material[3].checked) {
-                densidade = 8.2
-                calcular()
+                densidade = 8.2;
+                calcular();
             } else {
                 alert("Escolha o material!")
             }
         }
-        */
 
-        function calcular() {
+        function calcular() { // É chamada pela função verificarDados()
 
             var textoPeca = peca.value;
             var quantidade = Number(qtde.value);
             var val1 = Number(num1.value);
             var val2 = Number(num2.value);
             var val3 = Number(num3.value);
-            var densidade = parseFloat(document.querySelector('input[name="radmat"]:checked').value); // Obtém a densidade diretamente do radio button
+
+            var mat = String(document.querySelector('input[name="radmat"]:checked').id);
             var metroQuad = (val1/1000) * (val2/1000);
             var peso = metroQuad * val3 * densidade;
             var tinta = (metroQuad * 2) / 3.6;
 
             // Lista que armazena os resultados anteriores
             var itemResultado = document.createElement('li')
-            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} <strong>Quantidade:</strong> ${quantidade}x <br> * Valores por unidade --> <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`;
+            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} - <strong>Material:</strong> ${mat} - <strong>Quantidade:</strong> ${quantidade}x <br> * Valores por unidade --> <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`;
             listaResultados.appendChild(itemResultado);
             
             // Atualizar as somas totais
@@ -155,7 +155,7 @@
             desabilitarCampos();
         }
 
-        function desabilitarCampos() {
+        function desabilitarCampos() { // É chamada pela função calcular()
 
             peca.disabled = true;
             qtde.disabled = true;
@@ -165,10 +165,10 @@
             botaoCalcular.disabled = true;           
             botaoLimpar.disabled = false;
             botaoExportarPDF.disabled = false;
-            
+            botaoReiniciar.disabled = false;            
         }
 
-        function limpar() {
+        function limpar() { // É chamada ao clicar no botão Limpar Dados
 
             peca.disabled = false;
             qtde.disabled = false;
@@ -182,29 +182,72 @@
             num2.value = "";
             num3.value = "";
 
+            for (let i = 0; i < material.length; i++) {
+                material[i].checked = false;
+            }
+
             botaoLimpar.disabled = true;
             botaoExportarPDF.disabled = true;
 
             peca.focus();
-
         }
 
-        function exportarPDF() {
+        function exportarPDF() { // É chamada ao clicar no botão Exportar PDF
+
             const { jsPDF } = window.jspdf;
             let doc = new jsPDF();
-            let texto = `Peça: ${peca.value}\nQuantidade: ${qtde.value}\nMetro² Total: ${totalMetroQuad.toFixed(3)} m²\nPeso Total: ${totalPeso.toFixed(3)} Kg\nTinta Total: ${totalTinta.toFixed(3)} Kg`;
 
-            doc.text(texto, 10, 10);
+            let cab = `RELATÓRIO COMPOSIÇÃO DE PRODUTO CAESA`;
+            
+            doc.text(cab, 10, 10);
 
-            // Formata o conteúdo da lista como texto
+            let texto = `Metro² Total: ${totalMetroQuad.toFixed(3)} m²\nPeso Total: ${totalPeso.toFixed(3)} Kg\nTinta Total: ${totalTinta.toFixed(3)} Kg`;
+
+            doc.text(texto, 10, 30);
+
+            // Formata o conteúdo da lista como texto            
             let listaResultadosTexto = "";
             for (let i = 0; i < listaResultados.children.length; i++) {
                 listaResultadosTexto += listaResultados.children[i].innerText + "\n";
             }
 
-            doc.text(listaResultadosTexto, 10, 30);
+            doc.text(listaResultadosTexto, 10, 60);
 
-            doc.save('dados_tecnicos.pdf');
+            doc.save('Relatorio.pdf');
+        }
+
+        function reiniciar() {
+
+            listaResultados.innerHTML = "";
+
+            peca.disabled = false;
+            qtde.disabled = false;
+            num1.disabled = false;
+            num2.disabled = false;
+            num3.disabled = false;
+            botaoCalcular.disabled = false;
+            peca.value = "";
+            qtde.value = "";
+            num1.value = "";
+            num2.value = "";
+            num3.value = "";
+
+            for (let i = 0; i < material.length; i++) {
+                material[i].checked = false;
+            }
+
+            totalMetroQuad = 0;
+            totalPeso = 0;
+            totalTinta = 0;
+            somaMetroQuad.innerHTML = "";
+            somaPeso.innerHTML = "";
+            somaTinta.innerHTML = "";
+
+            botaoLimpar.disabled = true;
+            botaoExportarPDF.disabled = true;
+            botaoReiniciar.disabled = true;
+
+            peca.focus();            
         }
 
     </script>

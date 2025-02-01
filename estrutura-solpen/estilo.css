@@ -3,20 +3,13 @@ body {
     font: normal 10pt Arial;
 }
 
-header {
-
-    color: black;
-    text-align: center;
-
-}
-
 section {
 
-    background-color: white;
+    background-color: lightgray;
     border-radius: 15px;
-    width: 520px;
+    width: 590px;
     margin: auto;
-    padding: 15px;
+    padding: 5px;
     border: 3px solid black;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.473);
 
@@ -26,15 +19,36 @@ section {
 
 }
 
-div#caesa {
+div#header {
 
-    background-image: url(LOGO\ CAESA\ 30x30.png);
+    background-image: url(LOGO\ CAESA\ 56x56.png);
     background-position: left;
     background-repeat: no-repeat;
+    background-color: #29166F;
+    color: white;
+    width: 90%;
+    height: 56px;
+    margin: 0px 10px;
+    padding: 0px 5px;
+    
+    border: 5px solid #F1A700;
+    border-radius: 5px;
+}
+
+div#header > h1 {
+    width: auto;
+    margin: 5px;
+    text-align: center;
+}
+
+div#caesa {
+
+    margin-top: 20px;
 }
 
 div#principal {
 
+    background-color: white;
     width: 90%;
     margin: 10px 10px;
     padding: 0px 5px;
@@ -43,8 +57,18 @@ div#principal {
     border-radius: 5px;
 
     display: flex;
-    flex-flow: column nowrap;    
+    flex-flow: column nowrap;
+}
 
+div#calculado {
+
+    background-color: white;
+    width: 90%;
+    margin: 10px 10px;
+    padding: 0px 5px;
+
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 p#mater {
@@ -82,7 +106,7 @@ input[type=number] {
 
 input[type=button] {
 
-    width: 100px;
+    width: 125px;
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
@@ -115,7 +139,7 @@ div#res > p {
 
 }
 
-h3 {
+h3, h4 {
 
     margin: 5px;
     text-align: center;
@@ -130,8 +154,6 @@ div#limpar {
 
 footer {
     
-    color: white;
     text-align: center;
     font-style: italic;
-
 }
