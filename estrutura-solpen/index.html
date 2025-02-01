@@ -19,9 +19,9 @@
 
     <section>
         <div id="caesa">
-            <label for="Nome da Peça: "><strong>Nome da peça Caesa:</strong> </label>
+            <label for="peca: "><strong>Nome da peça Caesa:</strong> </label>
             <input type="text" name="peca" id="peca" oninput="this.value = this.value.toUpperCase()" required>
-            <label for="Quantidade: "><strong>Quantidade:</strong></label>
+            <label for="qtde"><strong>Quantidade:</strong></label>
             <input type="number" name="qtde" id="qtde" required>
 
             <!-- O evento oninput acima, converte tudo que for digitado na caixa de texto, para letras maiúsculas -->
@@ -31,13 +31,13 @@
         <div id="principal">
             <h3>Características Técnicas</h3>
             <p id="mater">
-                <input type="radio" name="radmat" id="aco"> <!-- valor 0 -->
+                <input type="radio" name="radmat" id="aco" value="8"> <!-- valor 0 -->
                 <label for="aco">Aço Carbono</label>
-                <input type="radio" name="radmat" id="alum"> <!-- valor 1 -->
+                <input type="radio" name="radmat" id="alum" value="2.7"> <!-- valor 1 -->
                 <label for="alum">Alumínio</label>
-                <input type="radio" name="radmat" id="galv"> <!-- valor 2 -->
+                <input type="radio" name="radmat" id="galv" value="8.1"> <!-- valor 2 -->
                 <label for="galv">Gavanizado</label>
-                <input type="radio" name="radmat" id="inox"> <!-- valor 3 -->
+                <input type="radio" name="radmat" id="inox" value="8.2"> <!-- valor 3 -->
                 <label for="inox">Inox</label>
             </p>
             <p>Comprimento (mm):
@@ -52,17 +52,9 @@
             <p>
                 <input type="button" value="Calcular" id="bt1" onclick="verificarDados()">
                 <input type="button" value="Limpar Dados" id="bt2" onclick="limpar()">
-                <input type="button" value="Exportar PDF" id="btExportar" onclick="exportarpdf()">
+                <input type="button" value="Exportar PDF" id="btExportar" onclick="exportarPDF()">
             </p>
         </div>
-        <!--
-        <div id="res">
-            <p id="resultado"></p>
-            <p id="m2"></p>
-            <p id="peso"></p>
-            <p id="tinta"></p>
-        </div>
-        -->
 
         <div id="resultAnt">
             <h3>Estrutura Solpen</h3>
@@ -83,43 +75,37 @@
     </footer>
 
     <script>
+        // Variáveis globais
+        var peca = document.getElementById('peca');
+        var qtde = document.getElementById('qtde');       
+        var num1 = document.getElementById('num1');
+        var num2 = document.getElementById('num2');
+        var num3 = document.getElementById('num3');
+        var botaoCalcular = document.getElementById('bt1');
+        var botaoLimpar = document.getElementById('bt2');
+        var botaoExportarPDF = document.getElementById('btExportar');
+        var listaResultados = document.getElementById('lista-resultados');
+        var somaTinta = document.getElementById('soma-tinta');
+        var somaPeso = document.getElementById('soma-peso');
+        var somaMetroQuad = document.getElementById('soma-metroQuad');
+        var material = document.getElementsByName('radmat');
+        var totalMetroQuad = 0;
+        var totalPeso = 0;
+        var totalTinta = 0;
 
-        var peca = document.getElementById('peca')
-        var qtde = document.getElementById('qtde')       
-        var num1 = document.getElementById('num1')
-        var num2 = document.getElementById('num2')
-        var num3 = document.getElementById('num3')
-        var botaoCalcular = document.getElementById('bt1')
-        var botaoLimpar = document.getElementById('bt2')
-        var res = document.getElementById('res')
-        var resultado = document.getElementById('resultado')
-        var resMetroQuad = document.getElementById('m2')
-        var resPeso = document.getElementById('peso')
-        var resTinta = document.getElementById('tinta')
-        var listaResultados = document.getElementById('lista-resultados')
-        var somaTinta = document.getElementById('soma-tinta')
-        var somaPeso = document.getElementById('soma-peso')
-        var somaMetroQuad = document.getElementById('soma-metroQuad')
-        var material = document.getElementsByName('radmat')
-        var densidade = ""
-        var metroQuad = 0
-        var peso = 0
-        var tinta = 0
-        var totalMetroQuad = 0
-        var totalPeso = 0
-        var totalTinta = 0
-
-        botaoLimpar.disabled = true
+        botaoLimpar.disabled = true;
+        botaoExportarPDF.disabled = true;
         
         function verificarDados() {
 
-            if (peca.value.trim() == "" || num1.value.trim() == "" || num2.value.trim() == "" || num3.value.trim() == "" || qtde.value.trim() == "") {
-                alert("Digite valores válidos!")
+            if (peca.value.trim() === "" || num1.value.trim() === "" || num2.value.trim() === "" || num3.value.trim() === "" || qtde.value.trim() === "") {
+                alert("Digite valores válidos!");
             } else {
-                verificarMaterial()
+                calcular();
             }            
         }
 
+        /*
         function verificarMaterial() {
 
             if (material[0].checked) {
@@ -138,116 +124,88 @@
                 alert("Escolha o material!")
             }
         }
+        */
 
         function calcular() {
 
-            var textoPeca = String(peca.value)
-            var quantidade = Number(qtde.value)
-            var val1 = Number(num1.value)
-            var val2 = Number(num2.value)
-            var val3 = Number(num3.value)            
-
-            metroQuad = (val1/1000) * (val2/1000)
-            peso = metroQuad * val3 * densidade
-            tinta = (metroQuad * 2) / 3.6
-
-            // Resultado da peça por unidade
-            /*
-            resultado.innerHTML = `<strong>Resultado Peça ${textoPeca} (valor por unidade)</strong>`
-            resMetroQuad.innerHTML = `<strong>Metro²:</strong> ${metroQuad.toFixed(3)} m²`
-            resPeso.innerHTML = `<strong>Peso (Kg):</strong> ${peso.toFixed(3)} Kg`
-            resTinta.innerHTML = `<strong>Tinta (Kg):</strong> ${tinta.toFixed(3)} Kg`
-            */
+            var textoPeca = peca.value;
+            var quantidade = Number(qtde.value);
+            var val1 = Number(num1.value);
+            var val2 = Number(num2.value);
+            var val3 = Number(num3.value);
+            var densidade = parseFloat(document.querySelector('input[name="radmat"]:checked').value); // Obtém a densidade diretamente do radio button
+            var metroQuad = (val1/1000) * (val2/1000);
+            var peso = metroQuad * val3 * densidade;
+            var tinta = (metroQuad * 2) / 3.6;
 
             // Lista que armazena os resultados anteriores
             var itemResultado = document.createElement('li')
-            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} <strong>Quantidade:</strong> ${quantidade}x <br> * Valores por unidade --> <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`
-            listaResultados.appendChild(itemResultado)
+            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} <strong>Quantidade:</strong> ${quantidade}x <br> * Valores por unidade --> <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`;
+            listaResultados.appendChild(itemResultado);
             
             // Atualizar as somas totais
-            totalMetroQuad += (metroQuad * quantidade)
-            totalPeso += (peso * quantidade)
-            totalTinta += (tinta * quantidade)
+            totalMetroQuad += (metroQuad * quantidade);
+            totalPeso += (peso * quantidade);
+            totalTinta += (tinta * quantidade);
 
-            somaMetroQuad.innerHTML = `Metro² Total: ${totalMetroQuad.toFixed(3)} M²`
-            somaPeso.innerHTML = `Peso Total: ${totalPeso.toFixed(3)} Kg`
-            somaTinta.innerHTML = `Tinta Total: ${totalTinta.toFixed(3)} Kg`
+            somaMetroQuad.innerHTML = `Metro² Total: ${totalMetroQuad.toFixed(3)} M²`;
+            somaPeso.innerHTML = `Peso Total: ${totalPeso.toFixed(3)} Kg`;
+            somaTinta.innerHTML = `Tinta Total: ${totalTinta.toFixed(3)} Kg`;
 
-            peca.disabled = true
-            qtde.disabled = true
-            num1.disabled = true
-            num2.disabled = true
-            num3.disabled = true
-            botaoCalcular.disabled = true
-            // res.style.backgroundColor = "lightgray"
-            
-            botaoLimpar.disabled = false
-            // criaBotaoLimpar()
+            desabilitarCampos();
         }
 
-        /*
-        function criaBotaoLimpar() {
-            
-            let botaoLimpar = document.createElement('button')
-            let div = document.getElementById('principal')
-            botaoLimpar.textContent = 'Limpar'
-            div.appendChild(botaoLimpar)
-            botaoLimpar.setAttribute('id', 'bt2')
-            botaoLimpar.addEventListener('click', limpar)
+        function desabilitarCampos() {
 
+            peca.disabled = true;
+            qtde.disabled = true;
+            num1.disabled = true;
+            num2.disabled = true;
+            num3.disabled = true;
+            botaoCalcular.disabled = true;           
+            botaoLimpar.disabled = false;
+            botaoExportarPDF.disabled = false;
+            
         }
-        */
 
         function limpar() {
 
-            /*
-            let botaoLimpar = document.getElementById('bt2')
-            botaoLimpar.parentNode.removeChild(botaoLimpar)
-            */
+            peca.disabled = false;
+            qtde.disabled = false;
+            num1.disabled = false;
+            num2.disabled = false;
+            num3.disabled = false;
+            botaoCalcular.disabled = false;
+            peca.value = "";
+            qtde.value = "";
+            num1.value = "";
+            num2.value = "";
+            num3.value = "";
 
-            peca.disabled = false
-            qtde.disabled = false
-            num1.disabled = false
-            num2.disabled = false
-            num3.disabled = false
-            botaoCalcular.disabled = false
-            // res.style.backgroundColor = ""
+            botaoLimpar.disabled = true;
+            botaoExportarPDF.disabled = true;
 
-            peca.value = ""
-            qtde.value = ""
-            num1.value = ""
-            num2.value = ""
-            num3.value = ""
+            peca.focus();
 
-            /*
-            resultado.innerHTML = ""
-            resMetroQuad.innerHTML = ""
-            resPeso.innerHTML = ""
-            resTinta.innerHTML = ""
-            */
-
-            botaoLimpar.disabled = true
-
-            peca.focus()
-
-            alert(itemResultado)
         }
 
         function exportarPDF() {
             const { jsPDF } = window.jspdf;
-
             let doc = new jsPDF();
-
-            let resultados = document.getElementById('lista-resultados').innerHTML;
-            let texto = `Peça: ${peca.value} \nQuantidade: ${qtde.value} \nMetro² Total: $      {totalMetroQuad.toFixed(3)} m² \nPeso Total: ${totalPeso.toFixed(3)} Kg \nTinta Total: $    {totalTinta.toFixed(3)} Kg`;
+            let texto = `Peça: ${peca.value}\nQuantidade: ${qtde.value}\nMetro² Total: ${totalMetroQuad.toFixed(3)} m²\nPeso Total: ${totalPeso.toFixed(3)} Kg\nTinta Total: ${totalTinta.toFixed(3)} Kg`;
 
             doc.text(texto, 10, 10);
-            doc.text('Resultados:', 10, 30);
-            doc.fromHTML(resultados, 10, 40);
+
+            // Formata o conteúdo da lista como texto
+            let listaResultadosTexto = "";
+            for (let i = 0; i < listaResultados.children.length; i++) {
+                listaResultadosTexto += listaResultados.children[i].innerText + "\n";
+            }
+
+            doc.text(listaResultadosTexto, 10, 30);
 
             doc.save('dados_tecnicos.pdf');
         }
-
 
     </script>
 </body>
