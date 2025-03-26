@@ -4,21 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página para cálculo de material de engenharia">
+    <meta name="robots" content="noindex"> <!-- Impede os buscadores de apresentar esta página em seu resultado de busca -->
+    <meta name="robots" content="nofollow"> <!-- Impede a associação aos links da página -->
     <link rel="stylesheet" href="estilo.css">
     <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon">
     <title>Dados Técnicos</title>
+
+    <!-- A meta tag robots é importante para indicar aos buscadores como eu quero que os dados da minha página sejam tratados -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 </head>
 <body>
-    <section>
+    <section id="secao">
         <div id="header">
             <h1>Cálculo de peça e conjunto</h1>
             <h4>* Preencha todos os campos solicitados *</h4>
         </div>
         <div id="caesa">
-            <label for="peca: "><strong>Nome da peça Caesa:</strong> </label>
+            <label for="peca: "><strong>Nome da peça:</strong> </label>
             <input type="text" name="peca" id="peca" oninput="this.value = this.value.toUpperCase()" required>
             <label for="qtde"><strong>Quantidade:</strong></label>
             <input type="number" name="qtde" id="qtde" required>
@@ -39,16 +44,21 @@
                 <input type="radio" name="radmat" id="Inox" value="8.2">
                 <label for="inox">Inox</label>
             </p>
-            <p>Comprimento (mm):
-                <input type="number" name="num1" id="num1" required>
-            </p>
-            <p>Largura (mm):
-                <input type="number" name="num2" id="num2" required>
-            </p>
-            <p>Espessura (mm):
-                <input type="number" name="num3" id="num3" required>
-            </p>
-            <p>
+            <div id="dados">
+                <p>Comprimento (mm):
+                    <input type="number" name="num1" id="num1" required>
+                </p>
+                <p>Largura (mm):
+                    <input type="number" name="num2" id="num2" required>
+                </p>
+                <p>Espessura (mm):
+                    <input type="number" name="num3" id="num3" required>
+                </p>
+            </div>
+            <div id="sugestao">
+                <a href="chapas.html" target="_blank">** Lista de chapas **</a>
+            </div>
+            <p id="botoes">
                 <input type="button" value="Calcular" id="bt1" onclick="verificarDados()">
                 <input type="button" value="Novo Dado" id="bt2" onclick="limpar()">
                 <input type="button" value="Exportar PDF" id="btExportar" onclick="exportarPDF()">
@@ -60,12 +70,16 @@
             <h3>Estrutura Solpen</h3>
             <h4>Cálculo do Conjunto</h4>
             <ul id="lista-resultados"></ul>
-            <p id="soma-metroQuad"></p>            
-            <p id="soma-peso"></p>
+            <p id="soma-metroQuad"></p><br>            
+            <p id="soma-peso"></p><br>
             <p id="soma-tinta"></p>
         </div>
 
     </section>
+
+    <div id="ia">
+        <a href="https://gemini.google.com/app?utm_source=app_launcher&utm_medium=owned&utm_campaign=base_all" target="_blank">Gemini</a>
+    </div>
 
     <footer>
         <p>&copy; By Leandro Lopes</p>
@@ -79,6 +93,7 @@
         var num1 = document.getElementById('num1');
         var num2 = document.getElementById('num2');
         var num3 = document.getElementById('num3');
+        var divSug = document.getElementById('sugestao');
         var botaoCalcular = document.getElementById('bt1');
         var botaoLimpar = document.getElementById('bt2');
         var botaoExportarPDF = document.getElementById('btExportar');
@@ -96,12 +111,29 @@
         botaoLimpar.disabled = true;
         botaoExportarPDF.disabled = true;
         botaoReiniciar.disabled = true;
+
+        const sectionCaesa = document.getElementById('secao');
+        const inputsC = sectionCaesa.querySelectorAll('input');
+
+        inputsC.forEach((input, index) => {
+            input.addEventListener("keydown", (evento) => {
+                if (evento.key === "Enter") {
+                    evento.preventDefault();
+                    if (index < inputsC.length - 1) {
+                        inputsC[index + 1].focus();
+                    }
+                }
+            });
+        });
         
         function verificarDados() { // É chamada ao clicar no botão Calcular
 
-            if (peca.value.trim() === "" || num1.value.trim() === "" || num2.value.trim() === "" || num3.value.trim() === "" || qtde.value.trim() === "") {
-                alert("Digite valores válidos!");
-            } else {
+            if (peca.value.trim() === "" || num1.value <= 0 || num2.value <= 0 || num3.value <= 0 || qtde.value <= 0) {
+                alert("Digite valores válidos e positivos!");
+            } else if (num3.value.length < 4 || num3.value.length > 4) {
+                alert("Este campo deve ter 2 casas decimais!")
+            }
+             else {
                 verificarMaterial();
             }            
         }
@@ -140,7 +172,7 @@
 
             // Lista que armazena os resultados anteriores
             var itemResultado = document.createElement('li')
-            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} - <strong>Material:</strong> ${mat} - <strong>Quantidade:</strong> ${quantidade}x <br> * Valores por unidade --> <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`;
+            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} - <strong>Material:</strong> ${mat} - <strong>Quantidade:</strong> ${quantidade}x <br> * Valores por unidade ----> <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`;
             listaResultados.appendChild(itemResultado);
             
             // Atualizar as somas totais
@@ -153,10 +185,11 @@
             somaTinta.innerHTML = `Tinta Total: ${totalTinta.toFixed(3)} Kg`;
 
             desabilitarCampos();
+
         }
 
         function desabilitarCampos() { // É chamada pela função calcular()
-
+            
             peca.disabled = true;
             qtde.disabled = true;
             num1.disabled = true;
@@ -165,11 +198,25 @@
             botaoCalcular.disabled = true;           
             botaoLimpar.disabled = false;
             botaoExportarPDF.disabled = false;
-            botaoReiniciar.disabled = false;            
+            botaoReiniciar.disabled = false;
+            
+            for (let i = 0; i < material.length; i++) {
+                material[i].disabled = true;
+            }
         }
 
-        function limpar() { // É chamada ao clicar no botão Limpar Dados
+        /*
+        function sugestao() {
 
+            var sugestao = document.createElement('p');
+            sugestao.innerHTML = "Sugestão de chapa";
+            divSug.appendChild(sugestao);
+            
+        }
+        */
+
+        function limpar() { // É chamada ao clicar no botão Limpar Dados
+            
             peca.disabled = false;
             qtde.disabled = false;
             num1.disabled = false;
@@ -184,6 +231,10 @@
 
             for (let i = 0; i < material.length; i++) {
                 material[i].checked = false;
+            }
+
+            for (let i = 0; i < material.length; i++) {
+                material[i].disabled = false;
             }
 
             botaoLimpar.disabled = true;
@@ -213,11 +264,11 @@
 
             doc.text(listaResultadosTexto, 10, 60);
 
-            doc.save('Relatorio.pdf');
+            doc.save('');
         }
 
         function reiniciar() {
-
+            
             listaResultados.innerHTML = "";
 
             peca.disabled = false;
@@ -234,6 +285,10 @@
 
             for (let i = 0; i < material.length; i++) {
                 material[i].checked = false;
+            }
+
+            for (let i = 0; i < material.length; i++) {
+                material[i].disabled = false;
             }
 
             totalMetroQuad = 0;

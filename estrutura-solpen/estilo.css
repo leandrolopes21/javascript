@@ -7,7 +7,7 @@ section {
 
     background-color: lightgray;
     border-radius: 15px;
-    width: 590px;
+    width: 790px;
     margin: auto;
     padding: 5px;
     border: 3px solid black;
@@ -57,7 +57,51 @@ div#principal {
     border-radius: 5px;
 
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row wrap;
+}
+
+div#principal > p {
+
+    width: 100%;
+    margin: 10px 10px;
+    padding: 0px 5px;
+    text-align: center;
+}
+
+div#dados {
+
+    width: 40%;
+    height: 119px;
+    /* border: 1px solid black; */
+
+    display: flex;
+    flex-flow: column wrap-reverse;
+
+    justify-content: center;
+
+}
+
+div#dados > p {
+
+    margin: 5px;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between
+
+}
+
+div#sugestao {
+
+    width: 60%;
+    height: 119px;
+    /* border: 1px solid black; */
+
+    display: flex;
+    flex-flow: column wrap-reverse;
+
+    justify-content: center;
+    align-items: center;
 }
 
 div#calculado {
@@ -69,10 +113,29 @@ div#calculado {
 
     border: 1px solid black;
     border-radius: 5px;
+
+    display: flex;
+    flex-flow: row wrap;
+}
+
+div#calculado > ul {
+
+    width: 90%;
+    margin: 10px auto;
+    padding: 0px 5px;
+
+}
+
+div#calculado > p {
+
+    width: 90%;
+    margin: 5px auto;
 }
 
 p#mater {
-    text-align: center;
+    
+    display: flex;
+    justify-content: center;
 }
 
 p#mater > label {
@@ -92,16 +155,22 @@ label {
 
 input[type=text] {
 
-    width: 80px;
+    width: 150px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+input[type=number]#qtde {
+
+    width: 70px;
     border-radius: 5px;
     text-align: center;
 }
 
 input[type=number] {
 
-    width: 70px;
+    width: 100px;
     border-radius: 5px;
-    text-align: center;
 }
 
 input[type=button] {
@@ -120,29 +189,20 @@ button {
     cursor: pointer;
 }
 
-div#res {
+h3 {
 
-    width: 90%;
-    text-align: center;
-    margin: 10px 10px;
-    padding: 0px 5px;
-    border-radius: 10px;
-
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: flex-start;
-}
-
-div#res > p {
-
-    margin: 5px; 
-
-}
-
-h3, h4 {
-
+    width: 100%;
     margin: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+h4 {
+
+    width: 100%;
+    margin: auto;
     text-align: center;
+    
 }
 
 div#limpar {
@@ -150,6 +210,24 @@ div#limpar {
     width: 80%;
     text-align: center;
     margin: 10px 0px 0px 0px;
+}
+
+div#ia {
+
+    background-color: #29166F;
+    width: 100px;
+    margin: 10px auto;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+    
+}
+
+div#ia > a {
+
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 footer {
