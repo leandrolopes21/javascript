@@ -218,8 +218,14 @@ h4 {
 
     width: 100%;
     margin: auto;
-    text-align: center;
-    
+    text-align: center;    
+}
+
+#arquivo {
+
+    width: 100%;
+    margin: auto;
+    text-align: center;    
 }
 
 div#limpar {

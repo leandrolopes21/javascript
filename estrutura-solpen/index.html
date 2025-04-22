@@ -18,7 +18,7 @@
             <h4>* Preencha todos os campos solicitados *</h4>
         </div>
         <div id="caesa">
-            <label for="peca: "><strong>Nome da peça:</strong> </label>
+            <label for="peca: "><strong>Nome da peça:</strong></label>
             <input type="text" name="peca" id="peca" oninput="this.value = this.value.toUpperCase()" required>
             <label for="qtde"><strong>Quantidade:</strong></label>
             <input type="number" name="qtde" id="qtde" required>
@@ -35,7 +35,7 @@
                 <input type="radio" name="radmat" id="Aluminio" value="2.7">
                 <label for="alum">Alumínio</label>
                 <input type="radio" name="radmat" id="Galvanizado" value="8.1">
-                <label for="galv">Gavanizado</label>
+                <label for="galv">Galvanizado</label>
                 <input type="radio" name="radmat" id="Inox" value="8.2">
                 <label for="inox">Inox</label>
             </p>
@@ -56,6 +56,7 @@
             <p id="botoes">
                 <input type="button" value="Calcular" id="bt1" onclick="verificarDados()">
                 <input type="button" value="Novo Dado" id="bt2" onclick="limpar()">
+                <input type="button" value="Finalizar Dados" id="btFinal" onclick="criarInput()">
                 <input type="button" value="Exportar PDF" id="btExportar" onclick="exportarPDF()">
                 <input type="button" value="Reiniciar Aplicação" id="btReiniciar" onclick="reiniciar()">
             </p>
@@ -63,7 +64,10 @@
 
         <div id="calculado">
             <h3>Estrutura</h3>
-            <h4>Cálculo do Conjunto</h4>
+            <p id="arquivo">
+                <!-- <h4>Cálculo do Conjunto</h4> -->
+                <!-- <input type="text" id="nomeArquivo" placeholder="Digite o nome do arquivo"> -->
+            </p>
             <ul id="lista-resultados"></ul>
             <p id="soma-metroQuad"></p><br>            
             <p id="soma-peso"></p><br>
@@ -100,8 +104,10 @@
         var divSug = document.getElementById('sugestao');
         var botaoCalcular = document.getElementById('bt1');
         var botaoLimpar = document.getElementById('bt2');
+        var botaoFinal = document.getElementById('btFinal');
         var botaoExportarPDF = document.getElementById('btExportar');
         var botaoReiniciar = document.getElementById('btReiniciar');
+        var nomeArquivo = document.getElementById('arquivo');
         var listaResultados = document.getElementById('lista-resultados');
         var somaTinta = document.getElementById('soma-tinta');
         var somaPeso = document.getElementById('soma-peso');
@@ -112,8 +118,10 @@
         var totalPeso = 0;
         var totalTinta = 0;
         var iframe;
+        var itemInput;
 
         botaoLimpar.disabled = true;
+        botaoFinal.disabled = true;
         botaoExportarPDF.disabled = true;
         botaoReiniciar.disabled = true;
 
@@ -173,7 +181,7 @@
             var mat = String(document.querySelector('input[name="radmat"]:checked').id);
             var metroQuad = (val1/1000) * (val2/1000);
             var peso = metroQuad * val3 * densidade;
-            var tinta = (metroQuad * 2) / 3.6;
+            var tinta = (metroQuad * 2) / 3.6;            
 
             // Lista que armazena os resultados anteriores
             var itemResultado = document.createElement('li');
@@ -203,7 +211,7 @@
             num3.disabled = true;
             botaoCalcular.disabled = true;           
             botaoLimpar.disabled = false;
-            botaoExportarPDF.disabled = false;
+            botaoFinal.disabled = false;
             botaoReiniciar.disabled = false;
             
             for (let i = 0; i < material.length; i++) {
@@ -250,12 +258,39 @@
             removeriframe();
         }
 
+        function criarInput() {
+            
+            // Cria o item caixa de texto para nomear o arquivo            
+            itemInput = document.createElement('input');
+            itemInput.setAttribute('type', 'text');
+            itemInput.setAttribute('id', 'nomeArquivo');
+            nomeArquivo.appendChild(itemInput);
+
+            botaoExportarPDF.disabled = false;
+
+            peca.disabled = true;
+            qtde.disabled = true;
+            num1.disabled = true;
+            num2.disabled = true;
+            num3.disabled = true;
+            botaoCalcular.disabled = true;           
+            botaoLimpar.disabled = true;
+            botaoFinal.disabled = true;
+            botaoReiniciar.disabled = false;
+            
+            for (let i = 0; i < material.length; i++) {
+                material[i].disabled = true;
+            }
+        }
+
         function exportarPDF() { // É chamada ao clicar no botão Exportar PDF
 
             const { jsPDF } = window.jspdf;
-            let doc = new jsPDF();
+            let doc = new jsPDF('l', 'mm', 'a4');
 
-            let cab = `RELATÓRIO COMPOSIÇÃO DE PRODUTO CAESA`;
+            const pegaNomeArquivo = document.getElementById('nomeArquivo').value;
+
+            let cab = (pegaNomeArquivo);
             
             doc.text(cab, 10, 10);
 
@@ -266,12 +301,12 @@
             // Formata o conteúdo da lista como texto            
             let listaResultadosTexto = "";
             for (let i = 0; i < listaResultados.children.length; i++) {
-                listaResultadosTexto += listaResultados.children[i].innerText + "\n";
+                listaResultadosTexto += listaResultados.children[i].innerText + "\n\n";
             }
 
             doc.text(listaResultadosTexto, 10, 60);
 
-            doc.save('Relatório');
+            doc.save(pegaNomeArquivo || 'Relatório');
         }
 
         function reiniciar() {
@@ -306,11 +341,13 @@
             somaTinta.innerHTML = "";
 
             botaoLimpar.disabled = true;
+            botaoFinal.disabled = true;
             botaoExportarPDF.disabled = true;
             botaoReiniciar.disabled = true;
 
             peca.focus();
             removeriframe();
+            removerinput();
         }
 
         function criariframe() {
@@ -328,6 +365,11 @@
         function removeriframe() {
 
             iframe.parentNode.removeChild(iframe);
+        }
+
+        function removerinput() {
+            
+            itemInput.parentNode.removeChild(itemInput);
         }
 
     </script>
