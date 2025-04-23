@@ -107,7 +107,7 @@
         var botaoFinal = document.getElementById('btFinal');
         var botaoExportarPDF = document.getElementById('btExportar');
         var botaoReiniciar = document.getElementById('btReiniciar');
-        var nomeArquivo = document.getElementById('arquivo');
+        const nomeArquivoDiv = document.getElementById('arquivo');
         var listaResultados = document.getElementById('lista-resultados');
         var somaTinta = document.getElementById('soma-tinta');
         var somaPeso = document.getElementById('soma-peso');
@@ -117,8 +117,8 @@
         var totalMetroQuad = 0;
         var totalPeso = 0;
         var totalTinta = 0;
-        var iframe;
-        var itemInput;
+        let itemInput = null; 
+        /* var container = document.getElementById('sugestao'); */
 
         botaoLimpar.disabled = true;
         botaoFinal.disabled = true;
@@ -185,7 +185,7 @@
 
             // Lista que armazena os resultados anteriores
             var itemResultado = document.createElement('li');
-            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} - <strong>Material:</strong> ${mat} - <strong>Comprimento:</strong> ${val1}mm - <strong>Largura:</strong>: ${val2}mm - <strong>Espessura:</strong> ${val3.toFixed(2)}mm - <strong>Qtde:</strong> ${quantidade}x <br> * Valores por unidade ----> <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`;
+            itemResultado.innerHTML = `<strong>PEÇA:</strong> ${textoPeca} - <strong>Material:</strong> ${mat} - <strong>Dimensões:</strong> ${val1}mm x ${val2}mm - <strong>Espessura:</strong> ${val3.toFixed(2)}mm - <strong>Qtde:</strong> ${quantidade}x <br> * Valores por unidade ----> <strong>Metro²:</strong> ${metroQuad.toFixed(3)} m² | <strong>Peso:</strong> ${peso.toFixed(3)} Kg | <strong>Tinta:</strong> ${tinta.toFixed(3)} Kg`;
             listaResultados.appendChild(itemResultado);
             
             // Atualizar as somas totais
@@ -198,7 +198,7 @@
             somaTinta.innerHTML = `Tinta Total: ${totalTinta.toFixed(3)} Kg`;
 
             desabilitarCampos();
-            criariframe();
+            /* criariframe(); */
 
         }
 
@@ -220,12 +220,11 @@
         }
 
         /*
-        function sugestao() {
+        function criariframe() {
 
-            var sugestao = document.createElement('p');
-            sugestao.innerHTML = "Sugestão de chapa";
-            divSug.appendChild(sugestao);
-            
+            var iframe = document.createElement('iframe');
+            iframe.src = 'chapas.html';
+            container.appendChild(iframe);
         }
         */
 
@@ -252,10 +251,11 @@
             }
 
             botaoLimpar.disabled = true;
+            botaoFinal.disabled = true;
             botaoExportarPDF.disabled = true;
 
             peca.focus();
-            removeriframe();
+            /* removeriframe(); */
         }
 
         function criarInput() {
@@ -264,10 +264,13 @@
             itemInput = document.createElement('input');
             itemInput.setAttribute('type', 'text');
             itemInput.setAttribute('id', 'nomeArquivo');
-            nomeArquivo.appendChild(itemInput);
+            nomeArquivoDiv.appendChild(itemInput);
 
-            botaoExportarPDF.disabled = false;
-
+            peca.value = "";
+            qtde.value = "";
+            num1.value = "";
+            num2.value = "";
+            num3.value = "";
             peca.disabled = true;
             qtde.disabled = true;
             num1.disabled = true;
@@ -276,11 +279,18 @@
             botaoCalcular.disabled = true;           
             botaoLimpar.disabled = true;
             botaoFinal.disabled = true;
+            botaoExportarPDF.disabled = false;
             botaoReiniciar.disabled = false;
             
             for (let i = 0; i < material.length; i++) {
                 material[i].disabled = true;
             }
+
+            for (let i = 0; i < material.length; i++) {
+                material[i].checked = false;
+            }
+
+            /* removeriframe(); */
         }
 
         function exportarPDF() { // É chamada ao clicar no botão Exportar PDF
@@ -307,6 +317,8 @@
             doc.text(listaResultadosTexto, 10, 60);
 
             doc.save(pegaNomeArquivo || 'Relatório');
+
+            botaoExportarPDF.disabled = true;
         }
 
         function reiniciar() {
@@ -346,30 +358,23 @@
             botaoReiniciar.disabled = true;
 
             peca.focus();
-            removeriframe();
+            /* removeriframe(); */
             removerinput();
         }
 
-        function criariframe() {
-
-            iframe = document.createElement('iframe');
-            iframe.src = 'chapas.html';
-            const container = document.getElementById('sugestao');
-            if (container) {
-                container.appendChild(iframe);
-            } else {
-                console.error('Elemento container não encontrado.');
-            }
-        }
-
+        /*
         function removeriframe() {
 
-            iframe.parentNode.removeChild(iframe);
+            container.parentNode.removeChild(iframe);
         }
+        */
 
         function removerinput() {
             
-            itemInput.parentNode.removeChild(itemInput);
+            if (itemInput && itemInput.parentNode === nomeArquivoDiv) {
+                nomeArquivoDiv.removeChild(itemInput);
+                itemInput = null;
+            }
         }
 
     </script>
